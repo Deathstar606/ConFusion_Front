@@ -1,23 +1,56 @@
-import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
+import React, {useState} from 'react';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, CardImg, Row, Col, Media, Container, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
+import demo from "../image/14 about.jpg"
+import { motion, AnimatePresence } from 'framer-motion';
 import { baseUrl } from '../shared/baseurl';
 
-function RenderLeader({leader}) {
-  return(
-      <div className="col-12 mt-5">
-          <Media tag="li">
-              <Media left middle>
-                  <Media object src={baseUrl + leader.image} alt={leader.name} />
-              </Media>
-              <Media body className="col-12">
-                  <Media heading>{leader.name}</Media>
-                  <p>{leader.designation}</p>
-                  <p>{leader.description}</p>
-              </Media>    
-          </Media>
-      </div>
+function RenderLeader({ leader }) {
+  const [modal, setModal] = useState(false);
+
+  const handleShow = () => setModal(true);
+  const handleHide = () => setModal(false);
+
+  return (
+    <>
+      <Col md={4}>
+        <motion.div onClick={handleShow} initial={{ scale: 1 }} whileHover={{ scale: 1.05 }}>
+          <CardImg src={baseUrl + leader.image} />
+        </motion.div>
+        <h2 className='text-center pt-2'>{leader.name}</h2>
+        <p className='text-center'>{leader.designation}</p>
+      </Col>
+      <AnimatePresence>
+        {modal && (
+          <motion.div
+            className='modal-back'
+            onClick={handleHide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className='d-flex justify-content-center'
+              style={{ marginTop: "10vh" }}
+              initial={{ opacity: 0, scale: 0.2 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.2 }}
+            >
+              <Container style={{ position: "absolute" }}>
+                <Row className="justify-content-center ml-1 mr-1">
+                  <Col md={5} className="p-4">
+                    <h2 className="text-center mb-4 text-white">{leader.name}</h2>
+                    <p className="text-center mb-4 text-white">{leader.designation}</p>
+                    <h5 className="text-center mb-4 text-white">{leader.description}</h5>
+                  </Col>
+                </Row>
+              </Container>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -32,66 +65,18 @@ function About(props) {
   });
 
   return(
-      <div className="container">
-          <div className="row">
-              <Breadcrumb>
-                  <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
-                  <BreadcrumbItem active>About Us</BreadcrumbItem>
-              </Breadcrumb>
-              <div className="col-12">
-                  <h3>About Us</h3>
-                  <hr />
-              </div>                
-          </div>
-          <div className="row row-content">
-              <div className="col-12 col-md-6">
-                  <h2>Our History</h2>
-                  <p>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.</p>
-                  <p>The restaurant traces its humble beginnings to <em>The Frying Pan</em>, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.</p>
-              </div>
-              <div className="col-12 col-md-5">
-                  <Card>
-                      <CardHeader className="bg-primary text-white">Facts At a Glance</CardHeader>
-                      <CardBody>
-                          <dl className="row p-1">
-                              <dt className="col-6">Started</dt>
-                              <dd className="col-6">3 Feb. 2013</dd>
-                              <dt className="col-6">Major Stake Holder</dt>
-                              <dd className="col-6">HK Fine Foods Inc.</dd>
-                              <dt className="col-6">Last Year's Turnover</dt>
-                              <dd className="col-6">$1,250,375</dd>
-                              <dt className="col-6">Employees</dt>
-                              <dd className="col-6">40</dd>
-                          </dl>
-                      </CardBody>
-                  </Card>
-              </div>
-              <div className="col-12">
-                  <Card>
-                      <CardBody className="bg-faded">
-                          <blockquote className="blockquote">
-                              <p className="mb-0">You better cut the pizza in four pieces because
-                                  I'm not hungry enough to eat six.</p>
-                              <footer className="blockquote-footer">Yogi Berra,
-                              <cite title="Source Title">The Wit and Wisdom of Yogi Berra,
-                                  P. Pepe, Diversion Books, 2014</cite>
-                              </footer>
-                          </blockquote>
-                      </CardBody>
-                  </Card>
-              </div>
-          </div>
-          <div className="row row-content">
-              <div className="col-12">
-                  <h2>Corporate Leadership</h2>
-              </div>
-              <div className="col-12">
-                  <Media list>
-                      {leaders}
-                  </Media>
-              </div>
-          </div>
-      </div>
+    <>
+        <div className='text-center'>
+            <h1>Our Identity</h1>
+            <p>Say somethings about the company</p>
+            <h1 className='pt-3'>Our Team</h1>
+        </div>
+        <Container style={{maxWidth: "85%"}}>
+            <Row className="px-5 py-5">
+                {leaders}
+            </Row>
+        </Container>
+    </>
   );
 }
 

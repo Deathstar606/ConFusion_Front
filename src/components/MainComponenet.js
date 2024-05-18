@@ -6,6 +6,11 @@ import Home from './HomeComponent';
 import About from './AboutComponent';
 import Contact from './ContactComponenet';
 import Favorites from './FavouriteComponent';
+import Gallery from "./GalleryComponent"
+import Location from './LocationConponent';
+import Order from './OrderComponent';
+import Events from './EventsComponent'
+import Gift from './GiftComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postComment, fetchDishes, fetchComments, 
@@ -26,8 +31,7 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({    //method defination
-  
+const mapDispatchToProps = dispatch => ({
   fetchFavorites: () => dispatch(fetchFavorites()),
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
   deleteFavorite: (dishId) => dispatch(deleteFavorite(dishId)),
@@ -55,8 +59,9 @@ class Main extends Component {
     this.props.fetchPromos();
     this.props.fetchLeaders();
     this.props.fetchFavorites();
+    console.log(this.props.favorites)
   }
-
+  
   render() {
   
   const HomePage = () => {
@@ -74,10 +79,18 @@ class Main extends Component {
   }
   
   const DishWithId = ({match}) => {
+
+    const men = this.props.dishes.dishes.map((items) =>
+      items.items.find((dish) => dish._id === match.params.dishId)
+    );
+
     return(
       this.props.auth.isAuthenticated
       ?
-      <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
+      <DishDetail dish={this.props.dishes.dishes
+        .flatMap((items) => items.items)
+        .find((dish) => dish._id === match.params.dishId) ?? null
+      }
         isLoading={this.props.dishes.isLoading}
         errMess={this.props.dishes.errMess}
         comments={this.props.comments.comments.filter((comment) => comment.dish === match.params.dishId)}
@@ -87,7 +100,10 @@ class Main extends Component {
         postFavorite={this.props.postFavorite}
         />
       :
-      <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
+      <DishDetail dish={this.props.dishes.dishes
+          .flatMap((items) => items.items)
+          .find((dish) => dish._id === match.params.dishId) ?? null
+        }
         isLoading={this.props.dishes.isLoading}
         errMess={this.props.dishes.errMess}
         comments={this.props.comments.comments.filter((comment) => comment.dish === match.params.dishId)}
@@ -123,6 +139,11 @@ class Main extends Component {
             <Route path="/home" component={HomePage} />
             <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />}/>
             <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
+            <Route exact path="/gallery" component={() => <Gallery/>} />
+            <Route exact path="/location" component={() => <Location/>} />
+            <Route exact path="/order" component={() => <Order/>} />
+            <Route exact path="/events" component={() => <Events/>} />
+            <Route exact path="/gift" component={() => <Gift/>} />
             <Route path="/menu/:dishId" component={DishWithId} />
             <PrivateRoute exact path="/favorites" component={() => <Favorites favorites={this.props.favorites} deleteFavorite={this.props.deleteFavorite} />} />
             <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />

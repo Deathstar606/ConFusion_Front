@@ -236,6 +236,12 @@ export const loginError = (message) => {
     }
 }
 
+export const alsoAdmin = () => {
+    return {
+        type: ActionTypes.LOG_ADMIN
+    }
+}
+
 export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
@@ -265,6 +271,9 @@ export const loginUser = (creds) => (dispatch) => {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
             localStorage.setItem('creds', JSON.stringify(creds));
+            if (response.admin) {
+                dispatch(alsoAdmin())
+            }
             // Dispatch the success action
             dispatch(fetchFavorites());
             dispatch(receiveLogin(response));

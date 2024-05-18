@@ -5,6 +5,7 @@ import * as ActionTypes from './ActionTypes';
 // we would also want a util to check if the token is expired.
 export const Auth = (state = {
         isLoading: false,
+        isAdmin: false,
         isAuthenticated: localStorage.getItem('token') ? true : false,
         token: localStorage.getItem('token'),
         client: "",
@@ -37,6 +38,10 @@ export const Auth = (state = {
                 errMess: '',
                 token: action.token
             };
+        case ActionTypes.LOG_ADMIN:
+            return {...state,
+                isAdmin: true
+            };
         case ActionTypes.LOGIN_FAILURE:
             return {...state,
                 isLoading: false,
@@ -51,6 +56,7 @@ export const Auth = (state = {
         case ActionTypes.LOGOUT_SUCCESS:
             return {...state,
                 isLoading: false,
+                isAdmin: false,
                 isAuthenticated: false,
                 token: '',
                 user: null
