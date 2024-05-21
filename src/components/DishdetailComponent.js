@@ -7,7 +7,7 @@ import { Control, LocalForm } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseurl';
 
-    function RenderDish({dish, favorite, postFavorite}) {
+        function RenderDish({dish, favorite, postFavorite}) {
             return(
                 <div className="col-12 col-md-5 m-1">
                         <Card>
@@ -29,7 +29,7 @@ import { baseUrl } from '../shared/baseurl';
                 </div>
             );
 
-    }
+        }
 
     function RenderComments({comments, postComment, dishId}) {
         if (comments != null)
@@ -141,22 +141,26 @@ import { baseUrl } from '../shared/baseurl';
         }
         else if (props.dish != null)        
             return (
-                <div className="container">
-                    <div className="row">
+                <div style={{backgroundColor: "rgb(255, 225, 0)"}}>
+                    <div className="container">
+                        <div className="row">
                         <Breadcrumb>
-                            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link to='/menu'>Menu</Link>
+                            </BreadcrumbItem>
                             <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
                         </Breadcrumb>
-                        <div className="col-12">
-                            <h3>{props.dish.name}</h3>
-                            <hr />
+                            <div className="col-12">
+                                <h3>{props.dish.name}</h3>
+                                <hr />
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
-                        <RenderComments comments={props.comments}
-                            postComment={props.postComment}
-                            dishId={props.dish._id} />
+                        <div className="row">
+                            <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
+                            <RenderComments comments={props.comments}
+                                postComment={props.postComment}
+                                dishId={props.dish._id} />
+                        </div>
                     </div>
                 </div>
             );

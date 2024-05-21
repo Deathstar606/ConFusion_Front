@@ -135,6 +135,18 @@ const Example = (props) => {
                 </NavItem>
                 <NavItem>
                   <div className='nav-items mt-1 mr-2 p-1'>
+                    Events
+                      <div className='nav-items-inner'/>
+                  </div >
+                </NavItem>
+                <NavItem>
+                  <div className='nav-items mt-1 mr-2 p-1'>
+                    Gift Cards
+                      <div className='nav-items-inner'/>
+                  </div >
+                </NavItem>
+                <NavItem>
+                  <div className='nav-items mt-1 mr-2 p-1'>
                     Gallery
                       <div className='nav-items-inner'/>
                   </div >

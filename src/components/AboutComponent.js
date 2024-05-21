@@ -58,25 +58,29 @@ function About(props) {
 
   const leaders = props.leaders.leaders.map((leader) => {
       return (
-          <div key={ leader.id }>
-              <RenderLeader leader={leader}/>
-          </div>
+        <RenderLeader leader={leader}/>
       );
   });
 
   return(
-    <>
+    <div className='pt-4 pb-4' style={{backgroundColor: "rgb(255, 225, 0)"}}>
         <div className='text-center'>
-            <h1>Our Identity</h1>
+            <h1 className='pt-4'>Our Identity</h1>
             <p>Say somethings about the company</p>
-            <h1 className='pt-3'>Our Team</h1>
+            <h1 className='p-4'>Our Team</h1>
         </div>
-        <Container style={{maxWidth: "85%"}}>
-            <Row className="px-5 py-5">
+        <Container className="pb-4" style={{maxWidth: "80%"}}>
+          <motion.div
+          initial = {{y: 50, opacity: 0}}
+          transition={{duration: 1, type: "tween", ease: "easeIn"}}
+          whileInView={{y: 0, opacity: 1}}
+          viewport={{ once: true }}>
+            <Row>
                 {leaders}
             </Row>
+          </motion.div>
         </Container>
-    </>
+    </div>
   );
 }
 

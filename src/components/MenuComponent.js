@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, CardImg, CardImgOverlay, CardTitle, Breadcrumb, BreadcrumbItem, Container, Row, Button, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
-import { motion, AnimatePresence, color } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import MediaQuery from "react-responsive";
-import axios from "axios";
 import { baseUrl } from "../shared/baseurl";
 
 const activeButtonStyles = {
@@ -86,20 +85,6 @@ function Menu(props) {
           Setitems(props.dishes.dishes[0].items);
         }
       }, [props.dishes]);
-
-/*     const pay = async () => {
-        
-        try {
-          const { data } = await axios.post(
-            'https://localhost:3443/api/bkash/payment/create',
-            { amount: 50, userId: "65b2b99ef511892580621a4b" },
-            { withCredentials: true }
-          );
-          window.open(data.bkashURL, '_blank');
-        } catch (error) {
-          console.log(error.response.data);
-        }
-      }; */
 
       const category = props.dishes.dishes.map((dish) => {
         return (

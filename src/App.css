@@ -1,3 +1,5 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 .row-header{
   margin:0px auto;
   padding:0px auto;
@@ -72,7 +74,7 @@ address{
   background: black;
 }
 
-.butt::before{
+.butt::before {
   content: "";
   position: absolute;
   left: 0;
@@ -93,6 +95,7 @@ address{
 
 .nav-items {
   color: rgb(255, 225, 0);
+  margin-top: 5px;
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -154,4 +157,10 @@ address{
 
 .custom-pagination-bullet:hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+.dropdown-toggle {
+  color: #000000;
+  border: 2px solid #000000;
+  font-weight: 12px;
 }

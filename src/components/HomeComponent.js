@@ -218,31 +218,7 @@ function Home() {
                                         stroke="black"
                                         strokeWidth="10"
                                         variants={variants}
-                                        animate={isInview2 ? "animate" : "initial"}/>
-                                        {/* <motion.path d="M337.511 357.977C350.312 387.358 360.686 462.661 361.589 469.615" 
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="10"
-                                        variants={variants}
-                                        animate={isInview2 ? "animate" : "initial"}/>
-                                        <motion.path d="M284.974 360.165C239.31 388.844 167.837 373.158 114.233 390.812" 
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="10"
-                                        variants={variants}
-                                        animate={isInview2 ? "animate" : "initial"}/>
-                                        <motion.path d="M101.1 215.692C115.312 241.926 101.1 378.003 107.103 384.244" 
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="10"
-                                        variants={variants}
-                                        animate={isInview2 ? "animate" : "initial"}/>
-                                        <motion.path d="M107.666 216.073C178.088 207.718 223.864 205.941 229.184 216.073C234.501 226.206 234.501 289.244 220.005 368.922" 
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="10"
-                                        variants={variants}
-                                        animate={isInview2 ? "animate" : "initial"}/> */}                                  
+                                        animate={isInview2 ? "animate" : "initial"}/>                                
                                     </motion.svg>
                                     <div className="text-center" style={{fontSize: "24px"}}>Description Goes Here</div>
                                     <div className="d-flex justify-content-center home-butt pt-3">

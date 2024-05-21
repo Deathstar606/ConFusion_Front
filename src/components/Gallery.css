@@ -34,7 +34,7 @@
   
   .logos-slide {
     display: inline-block;
-    animation: 35s slide infinite linear;
+    animation: 25s slide infinite linear;
   }
 
   .fullscreen-preview {

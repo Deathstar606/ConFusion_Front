@@ -23,7 +23,7 @@ function Order () {
       };
 
     return (
-        <>
+        <div style={{backgroundColor: "rgb(255, 225, 0)"}}>
             <h1 className='p-4 text-center'>Order food Online</h1>
                 <div className='d-flex justify-content-center pb-4'>
                     <motion.svg width="204" height="204" viewBox="-150 0 854 674" fill="none" ref={ref2}>
@@ -36,15 +36,15 @@ function Order () {
                     </motion.svg>
                 </div>
             <p className='text-center'>Some Description About Our Establishment</p>
-            <div className='d-flex justify-content-center p-4'>
+            <div className='d-flex justify-content-center p-4 home-butt'>
                 <Button
                     style={{border: "2px solid black"}} 
                     outline variant="primary" 
-                    className="rounded-0">
+                    className="butt">
                     Foodpanda
                 </Button>
             </div>
-        </>
+        </div>
     )
 }
 
