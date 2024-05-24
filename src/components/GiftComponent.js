@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Container, Row, Col, CardImg, Button } from "reactstrap";
 import { motion, useInView as Fview } from "framer-motion";
-import demo from "../image/14.jpg"
+import gift from "../image/gift.jpg"
 import axios from "axios";
 
 function Gift() {
@@ -59,7 +59,7 @@ function Gift() {
     <div style={{backgroundColor: "rgb(255, 225, 0)"}}>
       <Container className="p-5">
         <div className="d-flex justify-content-center">
-          <motion.svg width="204" height="204" viewBox="-150 0 854 674" fill="none" ref={ref}>
+          <motion.svg width="204" height="204" viewBox="-100 0 854 674" fill="none" ref={ref}>
             <motion.path d="M84.25 168.5L105.313 147.438H568.688L589.75 168.5V337H547.625V294.875H126.375V463.375H294.875V505.5H105.313L84.25 484.437V168.5ZM126.375 252.75H547.625V189.563H126.375V252.75Z"                                     
             fill="none"
             stroke="black"
@@ -83,11 +83,11 @@ function Gift() {
         <h1 className="text-center pb-5">Buy a Gift Card</h1>
         <Row className="pb-4">
           <Col md={6}>
-            <CardImg src={demo} />
+            <CardImg className="pb-4" src={gift} />
           </Col>
           <Col md={6} className="d-flex align-items-center">
             <div className="w-100">
-              <h1>Card Value</h1>
+              <h1 className="pb-2">Card Value</h1>
                 <Dropdown isOpen={dropdownOpen1} toggle={toggleDropdown1}>
                   <DropdownToggle outline className="w-100 d-flex justify-content-between align-items-center dropdown-toggle rounded-0">
                     {value} BDT <span className="ml-auto"></span>

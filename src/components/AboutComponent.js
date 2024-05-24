@@ -18,8 +18,8 @@ function RenderLeader({ leader }) {
         <motion.div onClick={handleShow} initial={{ scale: 1 }} whileHover={{ scale: 1.05 }}>
           <CardImg src={baseUrl + leader.image} />
         </motion.div>
-        <h2 className='text-center pt-2'>{leader.name}</h2>
-        <p className='text-center'>{leader.designation}</p>
+        <h2 className='text-center pt-3'>{leader.name}</h2>
+        <p className='text-center pb-4'>{leader.designation}</p>
       </Col>
       <AnimatePresence>
         {modal && (

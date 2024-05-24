@@ -12,12 +12,6 @@
   min-height:400px;
 }
 
-.footer{
-  background-color: bisque;
-  margin:0px auto;
-  padding: 20px 0px 20px 0px;
-}
-
 address{
   font-size:80%;
   margin:0px;
@@ -90,7 +84,7 @@ address{
   background-color: #000000;
   position: fixed;
   width: calc(100% - 20px);
-  z-index: 9999;
+  z-index: 999;
 }
 
 .nav-items {

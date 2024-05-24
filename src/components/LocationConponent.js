@@ -18,14 +18,14 @@ function Location () {
 
     return(
         <Container style={{maxWidth: "100%", backgroundColor: "rgb(255, 225, 0)"}}>
-            <h1 className='text-center p-5'>Hours & Location</h1>
-            <Row className="pb-5">
+            <Row className="pb-5 pt-5">
                 <Col md={4} className="d-flex align-items-center justify-content-center">
                     <div>
+                        <h1 className='text-center pt-3'>Hours & Location</h1>
                         <h4 className='text-center'>Open 7 days a week</h4>
                         <p className='text-center'>10.00 Pm - 12.00 Am</p>
-                        <div className='d-flex justify-content-center home-butt mt-4'>
-                            <h6 className='mr-3 mt-2'>CheckOut</h6>
+                        <div className='d-flex justify-content-center home-butt mt-5 mb-5'>
+                            <h6 className='mt-2 mr-2'>CheckOut</h6>
                                 {locations.map((location, index) => (
                                     <Button
                                         key={index}

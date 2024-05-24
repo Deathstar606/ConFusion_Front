@@ -1,36 +1,33 @@
-import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import { stack as Menu } from 'react-burger-menu'
-import "./Burger.css"
+import React, { useState } from 'react';
+import './Burger.css';
 
-class Burger extends React.Component {
-  showSettings (event) {
-    event.preventDefault();
-  }
+const BurgerMenu = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  render () {
-    // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
-    return (
-      <Menu right>
-        <Container>
-          <Row>
-            <Col>
-              <a id="home" href="/">Home</a>
-            </Col>
-            <Col>
-              <a id="contact"  href="/contact">Contact</a>
-            </Col>
-            <Col >
-            {/* <Link to="aboutus" spy={true} smooth={true} offset={-40} duration={500}>About</Link> */}
-            </Col>
-            <Col >
-              <a onClick={ this.showSettings } className="menu-item--small" href="">Settings</a>
-            </Col>
-          </Row>
-        </Container>
-      </Menu>
-    );
-  }
-}
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
-export default Burger
+  return (
+    <div>
+      <div className="burger-menu">
+        <div className="burger-icon" onClick={toggleMenu}>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
+          <div className={`bar ${menuOpen ? 'open' : ''}`}></div>
+        </div>
+      </div>
+
+      <div className={`menu ${menuOpen ? 'open' : ''}`}>
+        <ul>
+          <div className='d-flex justify-content-center'><li><a href="#">Home</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="#">About</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="#">Services</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="#">Contact</a></li></div>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default BurgerMenu;

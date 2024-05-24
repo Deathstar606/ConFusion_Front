@@ -34,7 +34,7 @@
   
   .logos-slide {
     display: inline-block;
-    animation: 25s slide infinite linear;
+    animation: 30s slide infinite linear;
   }
 
   .fullscreen-preview {
@@ -53,5 +53,24 @@
 .fullscreen-preview img {
     max-width: 90%;
     max-height: 90%;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: rgba(0, 0, 0, 0.5); /* Example: semi-transparent background */
+  border-radius: 50%; /* Example: make buttons circular */
+  width: 40px; /* Example: custom width */
+  height: 40px; /* Example: custom height */
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Example: change background on hover */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: rgb(255, 225, 0); /* Example: change arrow color */
+  font-size: 20px; /* Example: custom arrow size */
 }
   

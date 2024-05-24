@@ -3,6 +3,7 @@ import {Card, CardImg, CardBody, CardTitle, CardSubtitle,
     CardText, Container, Row, Col, Button} from 'reactstrap'
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from '../shared/baseurl';
+import MediaQuery from "react-responsive";
 import { motion, useInView as Fview } from "framer-motion";
 import event from "../image/Home/pexels-narda-yescas-724842-1566837.jpg"
 import special from "../image/Home/specials.jpg"
@@ -39,10 +40,10 @@ function RenderCard(/* {item, isLoading, errMess} */) {
                     transition={{duration: 1, type: "tween", ease: "easeIn"}}
                     whileInView={{x: 0, opacity: 1}}
                     viewport={{ once: true }}>
-                        <CardImg src={special}/>
+                        <CardImg className="pr-3 pl-3" src={special}/>
                         <h2 className="text-center pt-3">Hello There</h2>
                         <p className="text-center pt-1">Description</p>
-                        <div className="d-flex justify-content-center home-butt">
+                        <div className="d-flex justify-content-center home-butt pb-4">
                             <div className="text-center rounded-0 butt">
                                 Demo
                             </div>
@@ -55,10 +56,10 @@ function RenderCard(/* {item, isLoading, errMess} */) {
                     transition={{duration: 1, type: "tween", ease: "easeIn"}}
                     whileInView={{x: 0, opacity: 1}}
                     viewport={{ once: true }}>
-                        <CardImg src={event}/>
+                        <CardImg className="pr-3 pl-3" src={event}/>
                         <h2 className="text-center pt-3">Hello There</h2>
                         <p className="text-center pt-1">Description</p>
-                        <div className="d-flex justify-content-center home-butt">
+                        <div className="d-flex justify-content-center home-butt pb-4">
                             <div className="text-center rounded-0 butt">
                                 Demo
                             </div>
@@ -158,7 +159,7 @@ function Home() {
                                         animate={isInview ? "animate" : "initial"}/>                               
                                     </motion.svg>
                                     <div className="text-center" style={{fontSize: "24px"}}>Description Goes Here</div>
-                                    <div className="d-flex justify-content-center home-butt pt-3">
+                                    <div className="d-flex justify-content-center home-butt pt-3 pb-4">
                                         <div className="text-center rounded-0 butt">
                                             Demo
                                         </div>
@@ -167,7 +168,8 @@ function Home() {
                             </Col>
                         </Row>
                     </motion.div>
-                    <motion.div
+                   <MediaQuery minWidth={640}>
+                   <motion.div
                     initial = {{y: 50, opacity: 0}}
                     transition={{duration: 1, type: "tween", ease: "easeIn"}}
                     whileInView={{y: 0, opacity: 1}}
@@ -221,7 +223,7 @@ function Home() {
                                         animate={isInview2 ? "animate" : "initial"}/>                                
                                     </motion.svg>
                                     <div className="text-center" style={{fontSize: "24px"}}>Description Goes Here</div>
-                                    <div className="d-flex justify-content-center home-butt pt-3">
+                                    <div className="d-flex justify-content-center home-butt pt-3 pb-4">
                                         <div className="text-center rounded-0 butt">
                                             Demo
                                         </div>
@@ -233,6 +235,75 @@ function Home() {
                             </Col>
                         </Row>
                     </motion.div>
+                   </MediaQuery>
+                   <MediaQuery maxWidth={639}>
+                   <motion.div
+                    initial = {{y: 50, opacity: 0}}
+                    transition={{duration: 1, type: "tween", ease: "easeIn"}}
+                    whileInView={{y: 0, opacity: 1}}
+                    viewport={{ once: true }}>
+                        <Row>
+                            <Col md={8}>
+                                <CardImg src={deliver}></CardImg>
+                            </Col>
+                            <Col md={4} className="d-flex justify-content-center align-items-center">
+                                <div>
+                                    <motion.svg width="204" height="204" viewBox="-150 0 854 674" fill="none" ref={ref2}>
+                                        <motion.path d="M33.7 384.288V626.928" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>
+                                        <motion.path d="M33.7 424.728H175.24C196.691 424.728 217.263 433.25 232.431 448.418C247.599 463.585 256.12 484.158 256.12 505.608H357.22C378.669 505.608 399.243 514.13 414.41 529.298C429.578 544.465 438.1 565.038 438.1 586.488H33.7"
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}
+                                        />
+                                        <motion.path d="M175.24 505.608H256.12" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>
+                                        <motion.path d="M74.14 303.408H640.3" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>
+                                        <motion.path d="M357.22 20.3286V60.7687" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>
+                                        <motion.path d="M599.86 303.408C599.86 239.056 574.297 177.34 528.793 131.836C483.288 86.3324 421.571 60.7686 357.22 60.7686C292.869 60.7686 231.152 86.3324 185.648 131.836C140.144 177.34 114.58 239.056 114.58 303.408" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>
+                                        <motion.path d="M316.78 384.288H509.544C524.534 384.277 539.224 380.104 551.976 372.229C564.731 364.356 575.046 353.092 581.77 339.696L598.822 305.495" 
+                                        fill="none"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        variants={variants}
+                                        animate={isInview2 ? "animate" : "initial"}/>                                
+                                    </motion.svg>
+                                    <div className="text-center" style={{fontSize: "24px"}}>Description Goes Here</div>
+                                    <div className="d-flex justify-content-center home-butt pt-3 pb-4">
+                                        <div className="text-center rounded-0 butt">
+                                            Demo
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </motion.div>
+                   </MediaQuery>
             </Container>
     )
 }

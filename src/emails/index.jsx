@@ -1,15 +1,12 @@
-import { Button, Html } from "@react-email/components";
-import * as React from "react";
+import React from "react";
 
-export default function Email() {
+const Email = () => {
   return (
-    <Html>
-      <Button
-        href="https://example.com"
-        style={{ background: "#000", color: "#fff", padding: "12px 20px" }}
-      >
-        Click me
-      </Button>
-    </Html>
+    <div style={{backgroundColor: "rgb(255, 225, 0)"}}>
+      <h1>Hello, World!</h1>
+      <button><a href="https://youtu.be/dQw4w9WgXcQ?si=zfjDpzT7HAfDG8Ev">For Fun</a></button>
+    </div>
   );
-}
+};
+
+export default Email;

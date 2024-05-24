@@ -11,6 +11,7 @@ import Location from './LocationConponent';
 import Order from './OrderComponent';
 import Events from './EventsComponent'
 import Gift from './GiftComponent';
+import SendNewsletter from './TestNews';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postComment, fetchDishes, fetchComments, 
@@ -144,6 +145,7 @@ class Main extends Component {
             <Route exact path="/order" component={() => <Order/>} />
             <Route exact path="/events" component={() => <Events/>} />
             <Route exact path="/gift" component={() => <Gift/>} />
+            <Route exact path="/news" component={() => <SendNewsletter/>} />
             <Route path="/menu/:dishId" component={DishWithId} />
             <PrivateRoute exact path="/favorites" component={() => <Favorites favorites={this.props.favorites} deleteFavorite={this.props.deleteFavorite} />} />
             <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />

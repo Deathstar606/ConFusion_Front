@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import {
   Container,
-  Col,
   Row,
   Form,
-  FormGroup,
-  Label,
   Navbar,
   NavbarBrand,
   Nav,
@@ -13,7 +10,6 @@ import {
   Button
 } from 'reactstrap';
 import Brand from "../image/icons8-restaurant-64.png"
-import demo from "../image/14.jpg"
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -116,50 +112,53 @@ const Example = (props) => {
           <NavbarBrand href="/">
             <img src={Brand} alt="ConFusante" style={{ height: '30px' }} />
           </NavbarBrand>
-          <MediaQuery maxWidth={639}>
-            <Burger />
-          </MediaQuery>
-          <MediaQuery minWidth={640}>
               <Nav className="ml-auto" navbar>
-                <NavItem>
-                  <div className='nav-items mt-1 mr-2 p-1'>
-                    Menu
-                      <div className='nav-items-inner'/>
-                  </div >
-                </NavItem>
-                <NavItem>
-                  <div className='nav-items mt-1 mr-2 p-1'>
-                    Location
-                      <div className='nav-items-inner'/>
-                  </div >
-                </NavItem>
-                <NavItem>
-                  <div className='nav-items mt-1 mr-2 p-1'>
-                    Events
-                      <div className='nav-items-inner'/>
-                  </div >
-                </NavItem>
-                <NavItem>
-                  <div className='nav-items mt-1 mr-2 p-1'>
-                    Gift Cards
-                      <div className='nav-items-inner'/>
-                  </div >
-                </NavItem>
-                <NavItem>
-                  <div className='nav-items mt-1 mr-2 p-1'>
-                    Gallery
-                      <div className='nav-items-inner'/>
-                  </div >
-                </NavItem>
-                <NavItem>
-                  <div onClick={handleShowRes} className="text-center rounded-0 butt">
-                    Reservation
-                  </div>
-                </NavItem>
-                <NavItem>
-                  <div className="text-center rounded-0 butt">
+                <MediaQuery minWidth={640}>
+                  <NavItem>
+                    <div className='nav-items mt-1 mr-2 p-1'>
+                      Menu
+                        <div className='nav-items-inner'/>
+                    </div >
+                  </NavItem>
+                  <NavItem>
+                    <div className='nav-items mt-1 mr-2 p-1'>
+                      Location
+                        <div className='nav-items-inner'/>
+                    </div >
+                  </NavItem>
+                  <NavItem>
+                    <div className='nav-items mt-1 mr-2 p-1'>
+                      Events
+                        <div className='nav-items-inner'/>
+                    </div >
+                  </NavItem>
+                  <NavItem>
+                    <div className='nav-items mt-1 mr-2 p-1'>
+                      Gift Cards
+                        <div className='nav-items-inner'/>
+                    </div >
+                  </NavItem>
+                  <NavItem>
+                    <div className='nav-items mt-1 mr-2 p-1'>
+                      Gallery
+                        <div className='nav-items-inner'/>
+                    </div >
+                  </NavItem>
+                  <NavItem>
+                    <div onClick={handleShowRes} className="text-center rounded-0 butt">
+                      Reservation
+                    </div>
+                  </NavItem>
+                  <NavItem>
+                    <div className="text-center rounded-0 butt">
                       Order Now
-                  </div>
+                    </div>
+                  </NavItem>
+                </MediaQuery>
+                <MediaQuery maxWidth={639}>
+                  <Burger/>
+                </MediaQuery>
+
 {/*                   {!props.auth.isAuthenticated ?
                     <div className='mt-2 ml-4'>
                       <div onClick={handleShow}>
@@ -182,9 +181,7 @@ const Example = (props) => {
                       </Button>
                     </div>
                   } */}
-                </NavItem>
               </Nav>
-          </MediaQuery>
         </Navbar>
       </div>
 {/*       <AnimatePresence>
@@ -336,8 +333,8 @@ const Example = (props) => {
       >
        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${events})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-3 text-white">Hello There It's A Demo Header</h1>
-            <h6 className='mb-2 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>
@@ -345,8 +342,8 @@ const Example = (props) => {
         </SwiperSlide>
         <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${catering})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-3 text-white">Hello There It's A Demo Header</h1>
-            <h6 className='mb-2 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>
@@ -354,8 +351,8 @@ const Example = (props) => {
         </SwiperSlide>
         <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${gift})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-3 text-white">Hello There It's A Demo Header</h1>
-            <h6 className='mb-2 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>

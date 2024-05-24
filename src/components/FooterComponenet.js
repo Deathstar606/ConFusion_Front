@@ -1,6 +1,10 @@
 import {useState, useRef} from 'react';
 import { Breadcrumb, BreadcrumbItem, Row, Col, Container, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import MediaQuery from 'react-responsive';
+import { FaFacebook } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
 import { AnimatePresence, motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -34,33 +38,26 @@ function Footer() {
     return(
         <>
             <MediaQuery minWidth={640}>
-                <div className="footer">
+                <div style={{backgroundColor: "rgb(0, 0, 0)", padding: "30px 0px 30px 0px"}}>
                     <Container style={{maxWidth: "100%"}}>
                         <Row>
                             <Col md={4} xs={12} className="d-flex">
                                 <div>
                                     <div className="text-center">
-                                        <a className="btn btn-social-icon btn-google" href="http://google.com/+"><i className="fa fa-google-plus"></i></a>
-                                        <a className="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i className="fa fa-facebook"></i></a>
-                                        <a className="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i className="fa fa-linkedin"></i></a>
-                                        <a className="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i className="fa fa-twitter"></i></a>
-                                        <a className="btn btn-social-icon btn-google" href="http://youtube.com/"><i className="fa fa-youtube"></i></a>
-                                        <a className="btn btn-social-icon" href="mailto:"><i className="fa fa-envelope-o"></i></a>
+                                        <FaFacebook color="rgb(255, 225, 0)" size={30} className='mr-3'/>
+                                        <FaWhatsapp color="rgb(255, 225, 0)" size={30} className='mr-3'/>
+                                        <FaInstagram color="rgb(255, 225, 0)" size={30} className='mr-3'/>
+                                        <SiGmail color="rgb(255, 225, 0)" size={30} className='mr-3'/>
                                     </div>           
                                 </div>
                             </Col>
                             <Col md={4}></Col>
                             <Col md={4} className="d-flex justify-content-end">
-                                <div style={{fontWeight: "300", fontSize: "20px"}} className="pt-1 pr-3">About</div>
-                                <Button onClick={handleShow} outline className="m-1">Email-Signup</Button>
-                                <Button outline className="m-1">Contact Us</Button>
+                                <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 225, 0)"}} className="pt-1 pr-3">About</div>
+                                <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 225, 0)"}} className="pt-1 pr-3">Contact Us</div>
+                                <div onClick={handleShow} className="butt">Email-Signup</div>
                             </Col>
                         </Row>
-                        <div className="row justify-content-center">             
-                            <div className="col-auto">
-                                <p>© Copyright 2018 Ristorante Con Fusion</p>
-                            </div>
-                        </div>
                     </Container>
                     <AnimatePresence>
                         {modal && (
@@ -77,7 +74,7 @@ function Footer() {
                                 transition={{duration: .25, delay: .25}}>
                                         <Container style={{position: "absolute"}}>
                                         <Row className="justify-content-center ml-1 mr-1">
-                                            <Col md={5} className="p-4" style={{backgroundColor: "whitesmoke", border: "black solid 2px" }}>
+                                            <Col md={5} className="p-4" style={{backgroundColor: "rgb(255, 225, 0)", border: "black solid 2px" }}>
                                             <h2 className="text-center mb-4">Newsletter</h2>
                                             <p className='text-center mb-4'>You will get regular updates on our invents</p>
                                             <Form ref={formRef} onSubmit={handleSubmit} >
@@ -123,14 +120,12 @@ function Footer() {
                                                         onChange={(e) => setEmail(e.target.value)}
                                                     />
                                                 </FormGroup>
-                                                <div className='d-flex justify-content-center pb-2'>
-                                                <Button
-                                                style={{border: "2px solid black"}} 
-                                                outline variant="primary" 
-                                                className="rounded-0 mt-2" 
-                                                type="submit">
-                                                    Send
-                                                </Button>
+                                                <div className='d-flex justify-content-center pb-2 pt-2 home-butt'>
+                                                    <div
+                                                        className='butt' 
+                                                        type="submit">
+                                                        Send
+                                                    </div>
                                                 </div>
                                             </Form>
                                             </Col>
@@ -143,8 +138,9 @@ function Footer() {
                 </div>
             </MediaQuery>
             <MediaQuery maxWidth={639}>
-                <div className="footer text-center" style={{position: "sticky", bottom: 0, width: "100%"}}>
+                <div className="text-center" style={{position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 225, 0)", overflow: "hidden", padding: "10px 0px 10px 0px"}}>
                     <h2>Order Now</h2>
+                    <p>01793158660</p>
                 </div>
             </MediaQuery>
         </>
