@@ -1,8 +1,11 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+body {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
 .row-header{
-  margin:0px auto;
-  padding:0px auto;
+  font-family: "Ceviche One", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .row-content {
@@ -45,8 +48,8 @@ address{
 } */
 
 .butt {
-  border: 2px solid rgb(255, 225, 0);
-  color: rgb(255, 225, 0);
+  border: 2px solid rgb(255, 193, 0);
+  color: rgb(255, 193, 0);
   background: none;
   padding: 2px 20px;
   font-size: 17px;
@@ -63,7 +66,7 @@ address{
 }
 
 .butt:hover {
-  color: rgb(255, 225, 0);
+  color: rgb(255, 193, 0);
   border: 2px solid transparent;
   background: black;
 }
@@ -88,8 +91,9 @@ address{
 }
 
 .nav-items {
-  color: rgb(255, 225, 0);
-  margin-top: 5px;
+  color: rgb(255, 193, 0);
+  margin-top: 10px;
+  margin-right: 5px;
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -105,7 +109,7 @@ address{
   top: 0;
   left: -100px;
   bottom: -7px;
-  background: rgb(255, 225, 0);
+  background: rgb(255, 193, 0);
   z-index: -1;
   transition: left 0.3s ease;
 }
@@ -136,12 +140,12 @@ address{
 .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
-  background-color: rgb(255, 225, 0, 0.8);
+  background-color: rgb(255, 193, 0, 0.8);
   opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-  background-color: rgb(255, 225, 0);
+  background-color: rgb(255, 193, 0);
 }
 
 .custom-pagination-bullet {

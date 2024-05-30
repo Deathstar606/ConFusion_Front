@@ -20,10 +20,11 @@ const BurgerMenu = () => {
 
       <div className={`menu ${menuOpen ? 'open' : ''}`}>
         <ul>
-          <div className='d-flex justify-content-center'><li><a href="#">Home</a></li></div>
-          <div className='d-flex justify-content-center'><li><a href="#">About</a></li></div>
-          <div className='d-flex justify-content-center'><li><a href="#">Services</a></li></div>
-          <div className='d-flex justify-content-center'><li><a href="#">Contact</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="/menu">Menu</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="/location">Location</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="/events">Events</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="/gift">Gift Cards</a></li></div>
+          <div className='d-flex justify-content-center'><li><a href="/gallery">Gallery</a></li></div>
         </ul>
       </div>
     </div>

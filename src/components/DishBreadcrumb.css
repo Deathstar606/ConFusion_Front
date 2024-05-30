@@ -1,6 +1,6 @@
 /* Container for the breadcrumbs */
 .custom-breadcrumb {
-    background-color: #ffcc00; /* Background color */
+    background-color: rgb(0, 0, 0); /* Background color */
     padding: 10px; /* Padding around the breadcrumb items */
     border-radius: 5px; /* Rounded corners */
     display: flex; /* Flexbox layout for horizontal alignment */
@@ -10,7 +10,7 @@
 /* Individual breadcrumb items */
 .custom-breadcrumb-item {
     margin-right: 10px; /* Space between breadcrumb items */
-    color: #000; /* Text color */
+    color: rgb(255, 193, 0) /* Text color */
 }
 
 /* Links inside breadcrumb items */

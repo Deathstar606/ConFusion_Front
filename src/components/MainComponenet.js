@@ -11,7 +11,7 @@ import Location from './LocationConponent';
 import Order from './OrderComponent';
 import Events from './EventsComponent'
 import Gift from './GiftComponent';
-import SendNewsletter from './TestNews';
+import Sidebar from './TestNews';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { postComment, fetchDishes, fetchComments, 
@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
   deleteFavorite: (dishId) => dispatch(deleteFavorite(dishId)),
   fetchComments: () => dispatch(fetchComments()),
-  postComment: (dishId, rating, comment) => dispatch(postComment(dishId, rating, comment)),
+  postComment: (dishId, rating, comment, author) => dispatch(postComment(dishId, rating, comment, author)),
   fetchDishes: () => {dispatch(fetchDishes())},
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
   fetchPromos: () => dispatch(fetchPromos()),
@@ -80,10 +80,6 @@ class Main extends Component {
   }
   
   const DishWithId = ({match}) => {
-
-    const men = this.props.dishes.dishes.map((items) =>
-      items.items.find((dish) => dish._id === match.params.dishId)
-    );
 
     return(
       this.props.auth.isAuthenticated
@@ -129,23 +125,26 @@ class Main extends Component {
   
   return (
     <div>
-      <Header auth={this.props.auth} 
-        loginUser={this.props.loginUser}
-        signUser={this.props.signUser} 
-        logoutUser={this.props.logoutUser} 
-        />   
+        {this.props.location.pathname !== '/admin/users' && (
+          <Header 
+            auth={this.props.auth} 
+            loginUser={this.props.loginUser}
+            signUser={this.props.signUser} 
+            logoutUser={this.props.logoutUser} 
+          />
+        )}
       <TransitionGroup>
         <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
           <Switch>
             <Route path="/home" component={HomePage} />
             <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />}/>
-            <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
+            <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} comments={this.props.comments} />} />
             <Route exact path="/gallery" component={() => <Gallery/>} />
             <Route exact path="/location" component={() => <Location/>} />
             <Route exact path="/order" component={() => <Order/>} />
             <Route exact path="/events" component={() => <Events/>} />
             <Route exact path="/gift" component={() => <Gift/>} />
-            <Route exact path="/news" component={() => <SendNewsletter/>} />
+            <Route exact path="/admin/users" component={() => <Sidebar/>} />
             <Route path="/menu/:dishId" component={DishWithId} />
             <PrivateRoute exact path="/favorites" component={() => <Favorites favorites={this.props.favorites} deleteFavorite={this.props.deleteFavorite} />} />
             <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />

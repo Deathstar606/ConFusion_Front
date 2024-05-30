@@ -6,23 +6,21 @@ export const addComment = (comment) => ({
     payload: comment
 });
 
-export const postComment = (dishId, rating, comment) => (dispatch) => {
+export const postComment = (dishId, rating, comment, author) => (dispatch) => {
 
     const newComment = {
         dish: dishId,
         rating: rating,
-        comment: comment
+        comment: comment,
+        author: author
     }
     console.log('Comment ', newComment);
-
-    const bearer = 'bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl + 'comments', {
         method: 'POST',
         body: JSON.stringify(newComment),
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': bearer
+            'Content-Type': 'application/json'
         },
         credentials: 'same-origin'
     })

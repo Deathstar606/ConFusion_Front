@@ -63,11 +63,11 @@ function About(props) {
   });
 
   return(
-    <div className='pt-4 pb-4' style={{backgroundColor: "rgb(255, 225, 0)"}}>
+    <div className='pt-4 pb-4' style={{backgroundColor: "rgb(255, 193, 0)"}}>
         <div className='text-center'>
-            <h1 className='pt-4'>Our Identity</h1>
+            <h1 className='pt-4 row-header' style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Our Identity</h1>
             <p>Say somethings about the company</p>
-            <h1 className='p-4'>Our Team</h1>
+            <h1 className='pt-4 pb-5 row-header' style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Our Team</h1>
         </div>
         <Container className="pb-4" style={{maxWidth: "80%"}}>
           <motion.div

@@ -56,7 +56,7 @@ function Gift() {
   const toggleDropdown2 = () => setDropdownOpen2(!dropdownOpen2);
 
   return (
-    <div style={{backgroundColor: "rgb(255, 225, 0)"}}>
+    <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
       <Container className="p-5">
         <div className="d-flex justify-content-center">
           <motion.svg width="204" height="204" viewBox="-100 0 854 674" fill="none" ref={ref}>
@@ -80,7 +80,7 @@ function Gift() {
             animate={isInview ? "animate" : "initial"}/>                                
           </motion.svg>
         </div>
-        <h1 className="text-center pb-5">Buy a Gift Card</h1>
+        <h1 className="text-center pb-5 row-header" style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Buy a Gift Card</h1>
         <Row className="pb-4">
           <Col md={6}>
             <CardImg className="pb-4" src={gift} />

@@ -17,11 +17,11 @@ function Location () {
     };
 
     return(
-        <Container style={{maxWidth: "100%", backgroundColor: "rgb(255, 225, 0)"}}>
+        <Container style={{maxWidth: "100%", backgroundColor: "rgb(255, 193, 0)"}}>
             <Row className="pb-5 pt-5">
                 <Col md={4} className="d-flex align-items-center justify-content-center">
                     <div>
-                        <h1 className='text-center pt-3'>Hours & Location</h1>
+                        <h1 className='text-center pt-3 row-header' style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Hours & Location</h1>
                         <h4 className='text-center'>Open 7 days a week</h4>
                         <p className='text-center'>10.00 Pm - 12.00 Am</p>
                         <div className='d-flex justify-content-center home-butt mt-5 mb-5'>

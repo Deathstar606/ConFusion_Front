@@ -138,7 +138,7 @@ function TestiSlide () {
 
   return (
     <div>
-      <div className='pb-2 pt-1' style={{overflow: "hidden", backgroundColor: "rgb(255, 225, 0)"}}>
+      <div className='pb-2 pt-1' style={{overflow: "hidden", backgroundColor: "rgb(255, 193, 0)"}}>
         <MediaQuery minWidth={640}>
           <TestiMonial1/>
         </MediaQuery>

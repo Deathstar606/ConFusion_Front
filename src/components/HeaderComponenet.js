@@ -17,43 +17,23 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import events from "../image/Header/pexels-dana-tentis-118658-750073.jpg"
 import catering from "../image/Header/pexels-leslie-torres-229759733-12087878.jpg"
 import gift from "../image/Header/Gift-Card-Mag-Stripe-Gold-Foil-The-Glass-Knife-HS094278-Sample.jpg"
+import { Link } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import DatePicker from 'react-datepicker';
-import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaCalendarAlt, FaClock } from 'react-icons/fa';
+import "./reserveForm.css"
 import Burger from './Burger';
 
 const Example = (props) => {
-  /* const [modal, setModal] = useState(false); */
   const [ResMod, setResMod] = useState(false)
 /*   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const formRef = useRef(null); */
-  const Current = new Date();
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(null);
-  const [show, setShow] = useState(false); // Initialize with false
-  const [dateTime, setDateTime] = useState(null); // New state for dateTime
+  const [people, setPeople] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
 
-  const filterTime = (time) => {
-    const currentDate = new Date();
-    const selectedDate = new Date(time);
-    return selectedDate.getTime() >= currentDate.getTime();
-  };
-
-  const DatePickerWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  `;
-
-  const IconWrapper = styled.div`
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  `;
+  const today = new Date().toISOString().split('T')[0];
 
 /*   const handleShow = () => {
     setModal(true);
@@ -67,10 +47,6 @@ const Example = (props) => {
     setResMod(true);
   };
 
-  const handleHideRes = () => {
-    setResMod(false);
-  };
-
 /*   const handleSubmit = (e) => {
     e.preventDefault();
     props.loginUser({username: name, password: password});
@@ -81,29 +57,16 @@ const Example = (props) => {
 
   const handleSubmitRes = (event) => {
     event.preventDefault();
-    if (date) {
-      const selectedDateTime = new Date(date);
-      selectedDateTime.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      setDateTime(selectedDateTime);
-      setShow(true);
-    } else {
-      console.log('Please select a date.');
-    }
+    alert(`Table Set for ${people} at Date: ${date}, Time: ${time}`);
+    setPeople("")
+    setTime("")
+    setDate("")
+    setResMod(false)
   };
 
 /*   const handleLogout = () => {
     props.logoutUser();
   } */
-  
-  const containerVariants = {
-    initial: { backgroundColor: 'transparent', color: 'white' },
-    animate: { backgroundColor: 'white', color: 'black' },
-  };
-  
-  const transitionProps = {
-    duration: 0.5, // Duration of the transition in seconds
-    ease: 'easeInOut', // Easing function for the transition
-  };
 
   return (
     <div>
@@ -115,34 +78,44 @@ const Example = (props) => {
               <Nav className="ml-auto" navbar>
                 <MediaQuery minWidth={640}>
                   <NavItem>
-                    <div className='nav-items mt-1 mr-2 p-1'>
-                      Menu
-                        <div className='nav-items-inner'/>
-                    </div >
+                    <Link to="/menu">
+                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                        Menu
+                          <div className='nav-items-inner'/>
+                      </div >
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <div className='nav-items mt-1 mr-2 p-1'>
-                      Location
-                        <div className='nav-items-inner'/>
-                    </div >
+                    <Link to="/location">
+                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                        Location
+                          <div className='nav-items-inner'/>
+                      </div >
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <div className='nav-items mt-1 mr-2 p-1'>
-                      Events
-                        <div className='nav-items-inner'/>
-                    </div >
+                    <Link to="/events">
+                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                        Events
+                          <div className='nav-items-inner'/>
+                      </div >
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <div className='nav-items mt-1 mr-2 p-1'>
-                      Gift Cards
-                        <div className='nav-items-inner'/>
-                    </div >
+                    <Link to="/gift">
+                      <div className='nav-items pr-2 pl-2'>
+                        Gift Cards
+                          <div className='nav-items-inner'/>
+                      </div >
+                    </Link>
                   </NavItem>
                   <NavItem>
-                    <div className='nav-items mt-1 mr-2 p-1'>
-                      Gallery
-                        <div className='nav-items-inner'/>
-                    </div >
+                    <Link to="/gallery">
+                      <div className='nav-items pr-2 pl-2'>
+                        Gallery
+                          <div className='nav-items-inner'/>
+                      </div >
+                    </Link>
                   </NavItem>
                   <NavItem>
                     <div onClick={handleShowRes} className="text-center rounded-0 butt">
@@ -150,9 +123,11 @@ const Example = (props) => {
                     </div>
                   </NavItem>
                   <NavItem>
-                    <div className="text-center rounded-0 butt">
-                      Order Now
-                    </div>
+                    <Link to="/order">
+                      <div className="text-center rounded-0 butt">
+                        Order Now
+                      </div>
+                    </Link>
                   </NavItem>
                 </MediaQuery>
                 <MediaQuery maxWidth={639}>
@@ -246,7 +221,7 @@ const Example = (props) => {
                     </motion.div>
         )}
       </AnimatePresence> */}
-      <AnimatePresence>
+      <AnimatePresence mode='wait'>
         {ResMod && (
           <motion.div 
           className='modal-back'
@@ -259,62 +234,40 @@ const Example = (props) => {
               animate={{ opacity: 1, y: 0}}
               exit={{ opacity: 0, y: -70}}
               transition={{duration: .25, delay: .25}}>
-              <Container style={{position: "absolute"}}>
-                <Row className="justify-content-center ml-1 mr-1">
-                <div style={{ backgroundColor: "whitesmoke", display: "inline-block", padding: "40px" }}>
-                  <h1 className='text-center'>Reserve a Table</h1>
-                  <Form onSubmit={handleSubmitRes} className='d-flex pr-2 pt-4 pb-4'>
-                    <select aria-label="Default select example" className='p-3'>
-                      <option>Select People</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                    <DatePickerWrapper>
-                      <DatePicker
-                        placeholderText="Select Date"
-                        id="date-picker"
-                        selected={date}
-                        minDate={Current}
-                        onChange={(newDate) => setDate(newDate)}
-                        dateFormat="dd/MM/yyyy"
-                        className="text-center p-3"
-                      />
-                      <IconWrapper>
-                        <FaCalendarAlt />
-                      </IconWrapper>
-                    </DatePickerWrapper>
-                    <DatePickerWrapper>
-                      <DatePicker
-                        id="time-picker"
-                        placeholderText="Select Time"
-                        selected={time}
-                        onChange={(newTime) => setTime(newTime)}
-                        showTimeSelect
-                        showTimeSelectOnly
-                        timeIntervals={15}
-                        timeCaption="Time"
-                        dateFormat="hh:mm aa"
-                        filterTime={filterTime}
-                        className='text-center p-3'
-                      />
-                      <IconWrapper>
-                        <FaClock />
-                      </IconWrapper>
-                    </DatePickerWrapper>
-                    <Button 
-                    variant='dark' 
-                    type="submit"
-                    style={{border: "1px solid black", backgroundColor: "black"}} 
-                    outline  
-                    className="rounded-0 text-white" >Find a Table</Button>
-                  </Form>
-                  {show && (
-                    <p className='text-center'>Table Reserved on <span className='text-bold'>{dateTime.toLocaleString()}</span></p>
-                  )}
-                </div>
-                </Row>
-              </Container>
+                    <form className="reservation-form" onSubmit={handleSubmitRes}>
+                      <h1>Reserve a Table</h1>
+                      <div className="form-group">
+                        <select value={people} onChange={(e) => setPeople(e.target.value)} required>
+                          <option value="" disabled>Select People</option>
+                          <option value="1">1 Person</option>
+                          <option value="2">2 People</option>
+                          <option value="3">3 People</option>
+                          <option value="4">4 People</option>
+                          <option value="5">5 People</option>
+                          <option value="6">6 People</option>
+                        </select>
+                      </div>
+                      <div className="form-group">
+                        <input 
+                          type="date" 
+                          value={date} 
+                          onChange={(e) => setDate(e.target.value)} 
+                          min={today}
+                          required 
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input 
+                          type="time" 
+                          value={time} 
+                          onChange={(e) => setTime(e.target.value)} 
+                          required 
+                        />
+                      </div>
+                      <div className='home-butt'>
+                        <button type="submit" className='butt'>Find a Table</button>
+                      </div>
+                    </form>
             </motion.div>
           </motion.div>
         )}
@@ -333,8 +286,8 @@ const Example = (props) => {
       >
        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${events})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>
@@ -342,8 +295,8 @@ const Example = (props) => {
         </SwiperSlide>
         <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${catering})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>
@@ -351,8 +304,8 @@ const Example = (props) => {
         </SwiperSlide>
         <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${gift})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
           <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pl-4 pb-3">Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white'>Some Extra Descriptions</h6>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
             <div className="rounded-0 butt" style={{fontSize: "21px"}}>
               Demo
             </div>

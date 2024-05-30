@@ -7,6 +7,7 @@ import { FaInstagram } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { AnimatePresence, motion } from 'framer-motion';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Footer() {
     const [email, setEmail] = useState('');
@@ -44,17 +45,19 @@ function Footer() {
                             <Col md={4} xs={12} className="d-flex">
                                 <div>
                                     <div className="text-center">
-                                        <FaFacebook color="rgb(255, 225, 0)" size={30} className='mr-3'/>
-                                        <FaWhatsapp color="rgb(255, 225, 0)" size={30} className='mr-3'/>
-                                        <FaInstagram color="rgb(255, 225, 0)" size={30} className='mr-3'/>
-                                        <SiGmail color="rgb(255, 225, 0)" size={30} className='mr-3'/>
+                                        <FaFacebook color="rgb(255, 193, 0)" size={30} className='mr-3'/>
+                                        <FaWhatsapp color="rgb(255, 193, 0)" size={30} className='mr-3'/>
+                                        <FaInstagram color="rgb(255, 193, 0)" size={30} className='mr-3'/>
+                                        <SiGmail color="rgb(255, 193, 0)" size={30} className='mr-3'/>
                                     </div>           
                                 </div>
                             </Col>
                             <Col md={4}></Col>
                             <Col md={4} className="d-flex justify-content-end">
-                                <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 225, 0)"}} className="pt-1 pr-3">About</div>
-                                <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 225, 0)"}} className="pt-1 pr-3">Contact Us</div>
+                                <Link to="/aboutus">
+                                    <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 193, 0)"}} className="pt-1 pr-3">About</div>
+                                </Link>
+                                <div style={{fontWeight: "300", fontSize: "20px", color: "rgb(255, 193, 0)"}} className="pt-1 pr-3">Contact Us</div>
                                 <div onClick={handleShow} className="butt">Email-Signup</div>
                             </Col>
                         </Row>
@@ -74,7 +77,7 @@ function Footer() {
                                 transition={{duration: .25, delay: .25}}>
                                         <Container style={{position: "absolute"}}>
                                         <Row className="justify-content-center ml-1 mr-1">
-                                            <Col md={5} className="p-4" style={{backgroundColor: "rgb(255, 225, 0)", border: "black solid 2px" }}>
+                                            <Col md={5} className="p-4" style={{backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px" }}>
                                             <h2 className="text-center mb-4">Newsletter</h2>
                                             <p className='text-center mb-4'>You will get regular updates on our invents</p>
                                             <Form ref={formRef} onSubmit={handleSubmit} >
@@ -138,7 +141,7 @@ function Footer() {
                 </div>
             </MediaQuery>
             <MediaQuery maxWidth={639}>
-                <div className="text-center" style={{position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 225, 0)", overflow: "hidden", padding: "10px 0px 10px 0px"}}>
+                <div className="text-center" style={{position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)", overflow: "hidden", padding: "10px 0px 10px 0px"}}>
                     <h2>Order Now</h2>
                     <p>01793158660</p>
                 </div>

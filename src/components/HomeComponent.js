@@ -94,7 +94,7 @@ function Home() {
       };
 
     return(
-            <Container style={{maxWidth: "100%", overflow: "hidden", backgroundColor: "rgb(255, 225, 0)"}} className="px-0">
+            <Container style={{maxWidth: "100%", overflow: "hidden", backgroundColor: "rgb(255, 193, 0)"}} className="px-0">
                 <RenderCard/>
                     <motion.div
                     initial = {{y: 50, opacity: 0}}
