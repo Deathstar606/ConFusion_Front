@@ -63,10 +63,15 @@ body, html {
   margin: 10px 0;
 }
 
-.menu ul li a {
+.burg-menu {
   text-decoration: none;
   color: rgb(255, 193, 0);
   font-size: 34px;
+}
+
+.burg-menu.active {
+  color: black;
+  background-color: rgb(255, 193, 0);
 }
 
 .menu.open {

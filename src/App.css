@@ -99,6 +99,11 @@ address{
   overflow: hidden;
 }
 
+.nav-items.active {
+  color: #000000; /* Green color for active link */
+  background-color: rgb(255, 193, 0);
+}
+
 .nav-items:hover {
   color: #000000;
 }

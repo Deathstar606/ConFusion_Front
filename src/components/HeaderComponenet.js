@@ -17,7 +17,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import events from "../image/Header/pexels-dana-tentis-118658-750073.jpg"
 import catering from "../image/Header/pexels-leslie-torres-229759733-12087878.jpg"
 import gift from "../image/Header/Gift-Card-Mag-Stripe-Gold-Foil-The-Glass-Knife-HS094278-Sample.jpg"
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -25,6 +25,14 @@ import "./reserveForm.css"
 import Burger from './Burger';
 
 const Example = (props) => {
+    // State to keep track of the active link
+  const [activeLink, setActiveLink] = useState('');
+
+    // Function to handle click on NavLink
+  const handleNavLinkClick = (to) => {
+    setActiveLink(to);
+  };
+  
   const [ResMod, setResMod] = useState(false)
 /*   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -78,44 +86,64 @@ const Example = (props) => {
               <Nav className="ml-auto" navbar>
                 <MediaQuery minWidth={640}>
                   <NavItem>
-                    <Link to="/menu">
-                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                    <NavLink
+                      to="/menu"
+                      activeClassName="active"
+                      onClick={() => handleNavLinkClick('/menu')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/menu' ? 'active' : ''}`}>
                         Menu
-                          <div className='nav-items-inner'/>
-                      </div >
-                    </Link>
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
                   </NavItem>
                   <NavItem>
-                    <Link to="/location">
-                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                    <NavLink
+                      to="/location"
+                      activeClassName="active"
+                      onClick={() => handleNavLinkClick('/location')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/location' ? 'active' : ''}`}>
                         Location
-                          <div className='nav-items-inner'/>
-                      </div >
-                    </Link>
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
                   </NavItem>
                   <NavItem>
-                    <Link to="/events">
-                      <div className='nav-items pr-2 pl-2' activeClassName="active">
+                    <NavLink
+                      to="/events"
+                      activeClassName="active"
+                      onClick={() => handleNavLinkClick('/events')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/events' ? 'active' : ''}`}>
                         Events
-                          <div className='nav-items-inner'/>
-                      </div >
-                    </Link>
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
                   </NavItem>
                   <NavItem>
-                    <Link to="/gift">
-                      <div className='nav-items pr-2 pl-2'>
+                    <NavLink
+                      to="/gift"
+                      activeClassName="active"
+                      onClick={() => handleNavLinkClick('/gift')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/gift' ? 'active' : ''}`}>
                         Gift Cards
-                          <div className='nav-items-inner'/>
-                      </div >
-                    </Link>
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
                   </NavItem>
                   <NavItem>
-                    <Link to="/gallery">
-                      <div className='nav-items pr-2 pl-2'>
+                    <NavLink
+                      to="/gallery"
+                      activeClassName="active"
+                      onClick={() => handleNavLinkClick('/gallery')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/gallery' ? 'active' : ''}`}>
                         Gallery
-                          <div className='nav-items-inner'/>
-                      </div >
-                    </Link>
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
                   </NavItem>
                   <NavItem>
                     <div onClick={handleShowRes} className="text-center rounded-0 butt">
