@@ -32,7 +32,7 @@ function Gift() {
         
     try {
       const { data } = await axios.post(
-        'https://localhost:3443/api/bkash/payment/create',
+        'https://confusion-seven.vercel.app/api/bkash/payment/create',
           { amount: Total, userId: "65b2b99ef511892580621a4b" },
           { withCredentials: true }
       );

@@ -141,10 +141,12 @@ function Footer() {
                 </div>
             </MediaQuery>
             <MediaQuery maxWidth={639}>
-                <div className="text-center" style={{position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)", overflow: "hidden", padding: "10px 0px 10px 0px"}}>
-                    <h2>Order Now</h2>
-                    <p>01793158660</p>
-                </div>
+                <Link to="/order">
+                    <div className="text-center" style={{position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)", overflow: "hidden", padding: "10px 0px 0px 0px", textDecoration: "none"}}>
+                        <h2>Order Now</h2>
+                        <p>01793158660</p>
+                    </div>
+                </Link>
             </MediaQuery>
         </>
     )
