@@ -137,16 +137,22 @@ function TestiMonial1() {
 function TestiSlide () {
 
   return (
-    <div>
-      <div className='pb-2 pt-1' style={{overflow: "hidden", backgroundColor: "rgb(255, 193, 0)"}}>
-        <MediaQuery minWidth={640}>
-          <TestiMonial1/>
-        </MediaQuery>
-        <MediaQuery maxWidth={639}>
-          <TestiPhn/>
-        </MediaQuery> 
+    <motion.div
+    transition={{duration: 0.5, type: "tween", ease: "easeIn"}}
+    initial = {{x: 1000, opacity: 0}}
+    animate= {{x: 0, opacity: 1}}
+    exit= {{x: -1000, opacity: 0}}>
+      <div>
+        <div className='pb-2 pt-1' style={{overflow: "hidden", backgroundColor: "rgb(255, 193, 0)"}}>
+          <MediaQuery minWidth={640}>
+            <TestiMonial1/>
+          </MediaQuery>
+          <MediaQuery maxWidth={639}>
+            <TestiPhn/>
+          </MediaQuery> 
+        </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 

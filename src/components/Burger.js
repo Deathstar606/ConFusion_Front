@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Reserve } from './HeaderComponenet';
 import { NavLink } from 'react-router-dom';
 import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
@@ -6,8 +7,14 @@ import './Burger.css';
 
 const BurgerMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [reserveOpen, setreserveOpen] = useState(false);
 
   const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const toggleReserve = () => {
+    setreserveOpen(!reserveOpen)
     setMenuOpen(!menuOpen);
   };
 
@@ -35,7 +42,7 @@ const handleNavLinkClick = (to) => {
               <NavLink
                 to="/menu"
                 activeClassName="active"
-                onClick={() => handleNavLinkClick('/menu')} // Update active link on click
+                onClick={() => {handleNavLinkClick('/menu'); toggleMenu()}} // Update active link on click
               >
                 <div className={`burg-menu pr-2 pl-2 ${activeLink === '/menu' ? 'active' : ''}`}>
                   Menu
@@ -48,7 +55,7 @@ const handleNavLinkClick = (to) => {
               <NavLink
                 to="/location"
                 activeClassName="active"
-                onClick={() => handleNavLinkClick('/location')} // Update active link on click
+                onClick={() => {handleNavLinkClick('/location'); toggleMenu()}} // Update active link on click
               >
                 <div className={`burg-menu pr-2 pl-2 ${activeLink === '/location' ? 'active' : ''}`}>
                   Location
@@ -61,7 +68,7 @@ const handleNavLinkClick = (to) => {
               <NavLink
                 to="/events"
                 activeClassName="active"
-                onClick={() => handleNavLinkClick('/events')} // Update active link on click
+                onClick={() => {handleNavLinkClick('/events'); toggleMenu()}} // Update active link on click
               >
                 <div className={`burg-menu pr-2 pl-2 ${activeLink === '/events' ? 'active' : ''}`}>
                   Events
@@ -74,7 +81,7 @@ const handleNavLinkClick = (to) => {
               <NavLink
                 to="/gift"
                 activeClassName="active"
-                onClick={() => handleNavLinkClick('/gift')} // Update active link on click
+                onClick={() => {handleNavLinkClick('/gift'); toggleMenu()}} // Update active link on click
               >
                 <div className={`burg-menu pr-2 pl-2 ${activeLink === '/gift' ? 'active' : ''}`}>
                   Gift Cards
@@ -87,12 +94,32 @@ const handleNavLinkClick = (to) => {
               <NavLink
                 to="/gallery"
                 activeClassName="active"
-                onClick={() => handleNavLinkClick('/gallery')} // Update active link on click
+                onClick={() => {handleNavLinkClick('/gallery'); toggleMenu()}} // Update active link on click
               >
                 <div className={`burg-menu pr-2 pl-2 ${activeLink === '/gallery' ? 'active' : ''}`}>
                   Gallery
                 </div>
               </NavLink>
+            </li>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <li>
+              <NavLink
+                to="/aboutus"
+                activeClassName="active"
+                onClick={() => {handleNavLinkClick('/aboutus'); toggleMenu()}} // Update active link on click
+              >
+                <div className={`burg-menu pr-2 pl-2 ${activeLink === '/aboutus' ? 'active' : ''}`}>
+                  About
+                </div>
+              </NavLink>
+            </li>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <li>
+              <div className="burg-menu" onClick={toggleReserve}>
+                Reservation
+              </div>
             </li>
           </div>
           <li className='d-flex justify-content-center mt-5 pt-5'>
@@ -103,6 +130,9 @@ const handleNavLinkClick = (to) => {
           </li>
         </ul>
       </div>
+      {reserveOpen && (
+        <Reserve setResMod={toggleReserve}/>
+      )}
     </div>
   );
 };

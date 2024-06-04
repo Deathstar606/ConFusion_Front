@@ -24,6 +24,73 @@ import { AnimatePresence, motion } from 'framer-motion';
 import "./reserveForm.css"
 import Burger from './Burger';
 
+export const Reserve = ({setResMod}) => {
+  const [people, setPeople] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+
+  const today = new Date().toISOString().split('T')[0];
+
+  const handleSubmitRes = (event) => {
+    event.preventDefault();
+    alert(`Table Set for ${people} at Date: ${date}, Time: ${time}`);
+    setPeople("")
+    setTime("")
+    setDate("")
+    setResMod(false)
+  };
+
+  return (
+    <motion.div 
+    className='modal-back'
+    initial={{ opacity: 0}}
+    animate={{ opacity: 1}}
+    exit={{ opacity: 0}}>
+      <motion.div 
+        className='d-flex justify-content-center m-5'
+        initial={{ opacity: 0, y: -70}}
+        animate={{ opacity: 1, y: 0}}
+        exit={{ opacity: 0, y: -70}}
+        transition={{duration: .25, delay: .25}}>
+              <form className="reservation-form" onSubmit={handleSubmitRes}>
+                <h1>Reserve a Table</h1>
+                <div className="form-group">
+                  <select value={people} onChange={(e) => setPeople(e.target.value)} required>
+                    <option value="" disabled>Select People</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="4">4 People</option>
+                    <option value="5">5 People</option>
+                    <option value="6">6 People</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="date" 
+                    value={date} 
+                    onChange={(e) => setDate(e.target.value)} 
+                    min={today}
+                    required 
+                  />
+                </div>
+                <div className="form-group">
+                  <input 
+                    type="time" 
+                    value={time} 
+                    onChange={(e) => setTime(e.target.value)} 
+                    required 
+                  />
+                </div>
+                <div className='home-butt'>
+                  <button type="submit" className='butt'>Find a Table</button>
+                </div>
+              </form>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 const Example = (props) => {
     // State to keep track of the active link
   const [activeLink, setActiveLink] = useState('');
@@ -37,11 +104,7 @@ const Example = (props) => {
 /*   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const formRef = useRef(null); */
-  const [people, setPeople] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
 
-  const today = new Date().toISOString().split('T')[0];
 
 /*   const handleShow = () => {
     setModal(true);
@@ -63,15 +126,6 @@ const Example = (props) => {
     handleHide()
   }; */
 
-  const handleSubmitRes = (event) => {
-    event.preventDefault();
-    alert(`Table Set for ${people} at Date: ${date}, Time: ${time}`);
-    setPeople("")
-    setTime("")
-    setDate("")
-    setResMod(false)
-  };
-
 /*   const handleLogout = () => {
     props.logoutUser();
   } */
@@ -80,7 +134,7 @@ const Example = (props) => {
     <div>
       <div className='nav-c'>
         <Navbar light expand="md">
-          <NavbarBrand href="/">
+          <NavbarBrand href="http://Deathstar606.github.io/ConFusion_Front/">
             <img src={Brand} alt="ConFusante" style={{ height: '30px' }} />
           </NavbarBrand>
               <Nav className="ml-auto" navbar>
@@ -251,53 +305,7 @@ const Example = (props) => {
       </AnimatePresence> */}
       <AnimatePresence mode='wait'>
         {ResMod && (
-          <motion.div 
-          className='modal-back'
-          initial={{ opacity: 0}}
-          animate={{ opacity: 1}}
-          exit={{ opacity: 0}}>
-            <motion.div 
-              className='d-flex justify-content-center m-5'
-              initial={{ opacity: 0, y: -70}}
-              animate={{ opacity: 1, y: 0}}
-              exit={{ opacity: 0, y: -70}}
-              transition={{duration: .25, delay: .25}}>
-                    <form className="reservation-form" onSubmit={handleSubmitRes}>
-                      <h1>Reserve a Table</h1>
-                      <div className="form-group">
-                        <select value={people} onChange={(e) => setPeople(e.target.value)} required>
-                          <option value="" disabled>Select People</option>
-                          <option value="1">1 Person</option>
-                          <option value="2">2 People</option>
-                          <option value="3">3 People</option>
-                          <option value="4">4 People</option>
-                          <option value="5">5 People</option>
-                          <option value="6">6 People</option>
-                        </select>
-                      </div>
-                      <div className="form-group">
-                        <input 
-                          type="date" 
-                          value={date} 
-                          onChange={(e) => setDate(e.target.value)} 
-                          min={today}
-                          required 
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input 
-                          type="time" 
-                          value={time} 
-                          onChange={(e) => setTime(e.target.value)} 
-                          required 
-                        />
-                      </div>
-                      <div className='home-butt'>
-                        <button type="submit" className='butt'>Find a Table</button>
-                      </div>
-                    </form>
-            </motion.div>
-          </motion.div>
+          <Reserve setResMod={setResMod}/>
         )}
       </AnimatePresence>
       <Swiper

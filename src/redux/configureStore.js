@@ -5,6 +5,7 @@ import { Comments } from './comments';
 import { Promotions } from './promotions';
 import { Leaders } from './leaders';
 import { favorites } from './favourites';
+import { Subscribers } from './subscribers';
 import { Auth } from './auth';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
@@ -17,6 +18,7 @@ export const ConfigStore = () => {            //used in app.js
             comments: Comments,
             promotions: Promotions,
             auth: Auth,
+            subscribers: Subscribers, 
             favorites,
             leaders: Leaders,
             ...createForms({

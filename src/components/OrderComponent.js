@@ -23,7 +23,12 @@ function Order () {
       };
 
     return (
-        <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
+      <motion.div
+      transition={{duration: 0.5, type: "tween", ease: "easeIn"}}
+      initial = {{x: 1000, opacity: 0}}
+      animate= {{x: 0, opacity: 1}}
+      exit= {{x: -1000, opacity: 0}}>
+          <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
             <h1 className='p-4 text-center row-header' style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Order food Online</h1>
                 <div className='d-flex justify-content-center pb-4'>
                     <motion.svg width="204" height="204" viewBox="-190 0 854 674" fill="none" ref={ref2}>
@@ -45,6 +50,7 @@ function Order () {
                 </Button>
             </div>
         </div>
+      </motion.div>
     )
 }
 

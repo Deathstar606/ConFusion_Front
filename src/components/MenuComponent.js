@@ -59,7 +59,7 @@ function RenderButtons({ category, changer, activeCategory, setActiveCategory })
                             style={{ scale: "0.9" }}
                             initial={{ opacity: 0, y: -500 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: 0.8, delay: 0.5}}
                         >
                             <h3>
                                 {items.name}
@@ -138,6 +138,11 @@ function Menu(props) {
 
     else
     return(
+      <motion.div
+      transition={{duration: 0.5, type: "tween", ease: "easeIn"}}
+      initial = {{x: 1000, opacity: 0}}
+      animate= {{x: 0, opacity: 1}}
+      exit= {{x: -1000, opacity: 0}}>
         <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
             <h1 className="text-center pt-4 row-header" style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Menu</h1>
             <Container style={{maxWidth: "85%"}}>
@@ -158,6 +163,7 @@ function Menu(props) {
                 </Row>
             </Container>
         </div>
+      </motion.div>
     );
 }
 

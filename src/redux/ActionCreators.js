@@ -112,6 +112,38 @@ export const addComments = (comments) => ({
     payload: comments
 });
 
+export const fetchSubscribers = () => (dispatch) => {
+
+    return fetch(baseUrl + 'subscribe')
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(subs => dispatch(addSubscribers(subs)))
+        .catch(error => dispatch(subscribersFailed(error.message)));
+}
+
+export const subscribersFailed = (errmess) => ({
+    type: ActionTypes.SUBSCRIBER_FAILED,
+    payload: errmess
+});
+
+export const addSubscribers = (subs) => ({
+    type: ActionTypes.ADD_SUBSCRIBER,
+    payload: subs
+});
+
 export const fetchPromos = () => (dispatch) => {
     dispatch(promosLoading(true));
 

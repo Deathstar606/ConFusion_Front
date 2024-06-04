@@ -4,7 +4,7 @@ import Main from './components/MainComponenet';
 //import {DISHES} from './shared/dishes'
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigStore } from './redux/configureStore';
 
@@ -15,11 +15,11 @@ class App extends Component {
   render() {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <div className="App">
-        <Main />
-      </div>
-    </BrowserRouter>
+      <Router>
+        <div className="App">
+          <Main />
+        </div>
+      </Router>
     </Provider>
   );
 }
