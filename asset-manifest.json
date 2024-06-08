@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ConFusion_Front/static/css/main.5da0a27c.css",
-    "main.js": "/ConFusion_Front/static/js/main.271ad6e5.js",
+    "main.css": "/ConFusion_Front/static/css/main.313e7bfa.css",
+    "main.js": "/ConFusion_Front/static/js/main.116a4dc3.js",
     "static/js/787.e43f9d71.chunk.js": "/ConFusion_Front/static/js/787.e43f9d71.chunk.js",
     "static/media/gift.jpg": "/ConFusion_Front/static/media/gift.257eac1fda93100c5999.jpg",
     "static/media/pexels-leslie-torres-229759733-12087878.jpg": "/ConFusion_Front/static/media/pexels-leslie-torres-229759733-12087878.727fb41a5401475e4843.jpg",
@@ -25,12 +25,12 @@
     "static/media/Blog-Designs.jpg": "/ConFusion_Front/static/media/Blog-Designs.6a3224454fa4289a1274.jpg",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "/ConFusion_Front/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "index.html": "/ConFusion_Front/index.html",
-    "main.5da0a27c.css.map": "/ConFusion_Front/static/css/main.5da0a27c.css.map",
-    "main.271ad6e5.js.map": "/ConFusion_Front/static/js/main.271ad6e5.js.map",
+    "main.313e7bfa.css.map": "/ConFusion_Front/static/css/main.313e7bfa.css.map",
+    "main.116a4dc3.js.map": "/ConFusion_Front/static/js/main.116a4dc3.js.map",
     "787.e43f9d71.chunk.js.map": "/ConFusion_Front/static/js/787.e43f9d71.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5da0a27c.css",
-    "static/js/main.271ad6e5.js"
+    "static/css/main.313e7bfa.css",
+    "static/js/main.116a4dc3.js"
   ]
 }
