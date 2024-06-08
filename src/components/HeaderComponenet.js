@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Container,
-  Row,
-  Form,
   Navbar,
   NavbarBrand,
   Nav,
   NavItem,
-  Button
 } from 'reactstrap';
 import Brand from "../image/icons8-restaurant-64.png"
 import 'swiper/css';
@@ -17,7 +13,9 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import events from "../image/Header/pexels-dana-tentis-118658-750073.jpg"
 import catering from "../image/Header/pexels-leslie-torres-229759733-12087878.jpg"
 import gift from "../image/Header/Gift-Card-Mag-Stripe-Gold-Foil-The-Glass-Knife-HS094278-Sample.jpg"
-import { Link, NavLink } from 'react-router-dom';
+import { baseUrl } from '../shared/baseurl';
+import axios from 'axios';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -31,13 +29,19 @@ export const Reserve = ({setResMod}) => {
 
   const today = new Date().toISOString().split('T')[0];
 
-  const handleSubmitRes = (event) => {
-    event.preventDefault();
-    alert(`Table Set for ${people} at Date: ${date}, Time: ${time}`);
-    setPeople("")
-    setTime("")
-    setDate("")
-    setResMod(false)
+  const handleSubmitRes = async (event) => {
+      event.preventDefault();
+      try {
+        const response = await axios.post(baseUrl + 'reservation', { people: people, date: date, time: time })
+        alert("Reservation confirmed")
+        setPeople("")
+        setTime("")
+        setDate("")
+        setResMod(false)
+    } catch (error) {
+        alert("Reservation failed")
+        console.error(error);
+    }
   };
 
   return (
@@ -92,12 +96,18 @@ export const Reserve = ({setResMod}) => {
 }
 
 const Example = (props) => {
+
+  const location = useLocation();
     // State to keep track of the active link
   const [activeLink, setActiveLink] = useState('');
 
-    // Function to handle click on NavLink
-  const handleNavLinkClick = (to) => {
-    setActiveLink(to);
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location]);
+
+  // Function to handle click on NavLink
+  const handleNavLinkClick = (path) => {
+    setActiveLink(path);
   };
   
   const [ResMod, setResMod] = useState(false)

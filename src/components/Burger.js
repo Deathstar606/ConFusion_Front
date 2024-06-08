@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Reserve } from './HeaderComponenet';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import './Burger.css';
 
 const BurgerMenu = () => {
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [reserveOpen, setreserveOpen] = useState(false);
 
@@ -19,6 +20,10 @@ const BurgerMenu = () => {
   };
 
 const [activeLink, setActiveLink] = useState('');
+
+useEffect(() => {
+  setActiveLink(location.pathname);
+}, [location]);
 
   // Function to handle click on NavLink
 const handleNavLinkClick = (to) => {
@@ -37,7 +42,7 @@ const handleNavLinkClick = (to) => {
 
       <div className={`menu ${menuOpen ? 'open' : ''}`}>
         <ul>
-          <div className='d-flex justify-content-center'>
+          <div className='d-flex justify-content-center p-1'>
             <li>
               <NavLink
                 to="/menu"

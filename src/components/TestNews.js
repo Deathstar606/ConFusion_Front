@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { generateEmailHtml } from '../emails';
 import Email from '../emails';
 import axios from 'axios';
+import { baseUrl } from '../shared/baseurl';
 import styled from 'styled-components';
 
 // Styled components
@@ -66,7 +67,7 @@ export const SendNewsletter = ({ subscribers }) => {
         try {
             const emailPromises = subscribers.Subscribers.map(async (sub) => {
                 const emailHtml = generateEmailHtml(sub.firstname, formData.message, formData.imageUrl);
-                return axios.post('http://localhost:9000/sendnews', {
+                return axios.post( baseUrl + 'sendnews', {
                     subject: formData.subject,
                     htmlContent: emailHtml,
                     email: sub.email
@@ -82,21 +83,95 @@ export const SendNewsletter = ({ subscribers }) => {
     return (
         <div style={{ margin: '20px', fontFamily: 'Arial, sans-serif', minHeight: "100vh" }}>
             <h1 style={{ textAlign: 'center' }}>Send Newsletter</h1>
-            <form onSubmit={handleSend}>
-                <div>
-                    <label>Subject:</label>
-                    <input type="text" name="subject" value={formData.subject} onChange={handleChange} required />
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: 0
+            }}>
+                <div style={{
+                    backgroundColor: 'transparent',
+                    padding: '20px',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                    maxWidth: '400px',
+                    width: '100%'
+                }}>
+                    <form onSubmit={handleSend}>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '5px',
+                                fontWeight: 'bold'
+                            }}>Subject:</label>
+                            <input
+                                type="text"
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    backgroundColor: "transparent",
+                                    border: '2px solid black',
+                                    borderRadius: '4px',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                        </div>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '5px',
+                                fontWeight: 'bold'
+                            }}>Message:</label>
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    backgroundColor: "transparent",
+                                    border: '2px solid black',
+                                    borderRadius: '4px',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box',
+                                    height: '100px'
+                                }}
+                            ></textarea>
+                        </div>
+                        <div style={{ marginBottom: '15px' }}>
+                            <label style={{
+                                display: 'block',
+                                marginBottom: '5px',
+                                fontWeight: 'bold'
+                            }}>Image URL:</label>
+                            <input
+                                type="text"
+                                name="imageUrl"
+                                value={formData.imageUrl}
+                                onChange={handleChange}
+                                style={{
+                                    width: '100%',
+                                    padding: '10px',
+                                    backgroundColor: "transparent",
+                                    border: '2px solid black',
+                                    borderRadius: '4px',
+                                    fontSize: '16px',
+                                    boxSizing: 'border-box'
+                                }}
+                            />
+                        </div>
+                        <div className='d-flex justify-content-center'>
+                            <button type="submit" className='butt'>Send Email</button>
+                        </div>                       
+                    </form>
                 </div>
-                <div>
-                    <label>Message:</label>
-                    <textarea name="message" value={formData.message} onChange={handleChange} required></textarea>
-                </div>
-                <div>
-                    <label>Image URL:</label>
-                    <input type="text" name="imageUrl" value={formData.imageUrl} onChange={handleChange} />
-                </div>
-                <button type="submit">Send Email</button>
-            </form>
+            </div>
             <h2 style={{ textAlign: 'center', marginTop: '40px' }}>Preview</h2>
             <Email name={"First Name"} message={formData.message} imageUrl={formData.imageUrl} />
         </div>
