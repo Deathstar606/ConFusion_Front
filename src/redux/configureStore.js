@@ -4,9 +4,13 @@ import { Dishes } from './dishes';
 import { Comments } from './comments';
 import { Promotions } from './promotions';
 import { Leaders } from './leaders';
-import { favorites } from './favourites';
+import { Orders } from './orders';
+import { Headers } from './headers';
+import { Gifts } from './gifts';
+import { Catering } from './catering';
+import { Home } from './home';
+import { Events } from './events';
 import { Subscribers } from './subscribers';
-import { Auth } from './auth';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { InitialFeedback } from './forms';
@@ -17,9 +21,13 @@ export const ConfigStore = () => {            //used in app.js
             dishes: Dishes,
             comments: Comments,
             promotions: Promotions,
-            auth: Auth,
             subscribers: Subscribers, 
-            favorites,
+            orders: Orders,
+            headers: Headers,
+            home: Home,
+            catering: Catering,
+            gifts: Gifts,
+            events: Events,
             leaders: Leaders,
             ...createForms({
                 feedback: InitialFeedback

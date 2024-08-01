@@ -218,7 +218,240 @@ export const addLeaders = (leaders) => ({
     payload: leaders
 });
 
-export const postFeedback = (feedback) => (dispatch) => {
+////////////////////////////////////////
+
+export const addOrders = (orders) => ({
+    type: ActionTypes.ADD_ORDERS,
+    payload: orders
+});
+
+export const addOrder = (order) => ({
+    type: ActionTypes.ADD_ORDER,
+    payload: order
+});
+
+export const orderFailed = (errMess) => ({
+    type: ActionTypes.ORDERS_FAILED,
+    payload: errMess
+});
+
+export const fetchOrders = () => (dispatch) => {
+    try {
+        const ordersFromStorage = JSON.parse(localStorage.getItem('orders')) || [];
+        dispatch(addOrders(ordersFromStorage));
+    } catch (error) {
+        dispatch(orderFailed(error.message));
+    }
+};
+
+export const addNewOrder = (order) => (dispatch) => {
+    try {
+        const ordersFromStorage = JSON.parse(localStorage.getItem('orders')) || [];
+        ordersFromStorage.push(order);
+        localStorage.setItem('orders', JSON.stringify(ordersFromStorage));
+        dispatch(addOrder(order));
+    } catch (error) {
+        dispatch(orderFailed(error.message));
+    }
+};
+
+export const removeExistingOrder = (order_id, quantity) => (dispatch) => {
+    try {
+        let ordersFromStorage = JSON.parse(localStorage.getItem('orders')) || [];
+        ordersFromStorage = ordersFromStorage.filter(o => !(o._id === order_id && o.quantity === quantity));
+        localStorage.setItem('orders', JSON.stringify(ordersFromStorage));
+        dispatch(fetchOrders());
+    } catch (error) {
+        dispatch(orderFailed(error.message));
+    }
+};
+
+export const giftsLoading = () => ({
+    type: ActionTypes.GIFTS_LOADING
+});
+
+export const giftsFailed = (errmess) => ({
+    type: ActionTypes.GIFTS_FAILED,
+    payload: errmess
+});
+
+export const addgifts = (catering) => ({
+    type: ActionTypes.ADD_GIFTS,
+    payload: catering
+});
+
+export const fetchGifts = () => (dispatch) => {
+    
+    dispatch(giftsLoading());
+
+    return fetch(baseUrl + 'giftcase')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addgifts(leaders)))
+    .catch(error => dispatch(giftsFailed(error.message)));
+}
+
+export const headersLoading = () => ({
+    type: ActionTypes.HEADERS_LOADING
+});
+
+export const headersFailed = (errmess) => ({
+    type: ActionTypes.HEADERS_FAILED,
+    payload: errmess
+});
+
+export const addheaders = (headers) => ({
+    type: ActionTypes.ADD_HEADERS,
+    payload: headers
+});
+
+export const fetchHeaders = () => (dispatch) => {
+    
+    dispatch(headersLoading());
+
+    return fetch(baseUrl + 'headers')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addheaders(leaders)))
+    .catch(error => dispatch(headersFailed(error.message)));
+}
+
+export const homeLoading = () => ({
+    type: ActionTypes.HOME_LOADING
+});
+
+export const homeFailed = (errmess) => ({
+    type: ActionTypes.HOME_FAILED,
+    payload: errmess
+});
+
+export const addhome = (home) => ({
+    type: ActionTypes.ADD_HOME,
+    payload: home
+});
+
+export const fetchHome = () => (dispatch) => {
+    
+    dispatch(homeLoading());
+
+    return fetch(baseUrl + 'home')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addhome(leaders)))
+    .catch(error => dispatch(homeFailed(error.message)));
+}
+
+export const cateringLoading = () => ({
+    type: ActionTypes.CATERING_LOADING
+});
+
+export const cateringsFailed = (errmess) => ({
+    type: ActionTypes.COMMENTS_FAILED,
+    payload: errmess
+});
+
+export const addcaterings = (catering) => ({
+    type: ActionTypes.ADD_CATERING,
+    payload: catering
+});
+
+export const fetchCaterings = () => (dispatch) => {
+    
+    dispatch(cateringLoading());
+
+    return fetch(baseUrl + 'catermenu')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addcaterings(leaders)))
+    .catch(error => dispatch(cateringsFailed(error.message)));
+}
+
+export const eventsLoading = () => ({
+    type: ActionTypes.EVENTS_LOADING
+});
+
+export const eventsFailed = (errmess) => ({
+    type: ActionTypes.EVENTS_FAILED,
+    payload: errmess
+});
+
+export const addevents = (catering) => ({
+    type: ActionTypes.ADD_EVENTS,
+    payload: catering
+});
+
+export const fetchEvents = () => (dispatch) => {
+    
+    dispatch(eventsLoading());
+
+    return fetch(baseUrl + 'events')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addevents(leaders)))
+    .catch(error => dispatch(eventsFailed(error.message)));
+}
+
+/* export const postFeedback = (feedback) => (dispatch) => {
         
     return fetch(baseUrl + 'feedback', {
         method: "POST",
@@ -243,9 +476,9 @@ export const postFeedback = (feedback) => (dispatch) => {
     .then(response => response.json())
     .then(response => { console.log('Feedback', response); alert('Thank you for your feedback!\n'+JSON.stringify(response)); })
     .catch(error =>  { console.log('Feedback', error.message); alert('Your feedback could not be posted\nError: '+error.message); });
-};
+}; */
 
-export const requestLogin = (creds) => {
+/* export const requestLogin = (creds) => {
     return {
         type: ActionTypes.LOGIN_REQUEST,
         creds
@@ -381,105 +614,5 @@ export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('creds');
     dispatch(favoritesFailed("Error 401: Unauthorized"));
     dispatch(receiveLogout())
-}
+} */
 
-export const postFavorite = (dishId) => (dispatch) => {
-
-    const bearer = 'bearer ' + localStorage.getItem('token');
-
-    return fetch('https://localhost:3443/favorites/' + dishId, {
-        method: "POST",
-        body: JSON.stringify({"_id": dishId}),
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': bearer
-        },
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-    .then(favorites => { console.log('Favorite Added', favorites); dispatch(addFavorites(favorites)); })
-    .catch(error => dispatch(favoritesFailed(error.message)));
-}
-
-export const deleteFavorite = (dishId) => (dispatch) => {
-
-    const bearer = 'bearer ' + localStorage.getItem('token');
-
-    return fetch(baseUrl + 'favorites/' + dishId, {
-        method: "DELETE",
-        headers: {
-          'Authorization': bearer
-        },
-        credentials: "same-origin"
-    })
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            throw error;
-      })
-    .then(response => response.json())
-    .then(favorites => { console.log('Favorite Deleted', favorites); dispatch(addFavorites(favorites)); })
-    .catch(error => dispatch(favoritesFailed(error.message)));
-};
-
-export const fetchFavorites = () => (dispatch) => {
-    dispatch(favoritesLoading(true));
-
-    const bearer = 'bearer ' + localStorage.getItem('token');
-
-    return fetch("https://localhost:3443/favorites/", {
-        headers: {
-            'Authorization': bearer
-        },
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        }
-        else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-    },
-    error => {
-        var errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(favorites => dispatch(addFavorites(favorites)))
-    .catch(error => dispatch(favoritesFailed(error.message)));
-}
-
-export const favoritesLoading = () => ({
-    type: ActionTypes.FAVORITES_LOADING
-});
-
-export const favoritesFailed = (errmess) => ({
-    type: ActionTypes.FAVORITES_FAILED,
-    payload: errmess
-});
-
-export const addFavorites = (favorites) => ({
-    type: ActionTypes.ADD_FAVORITES,
-    payload: favorites
-});

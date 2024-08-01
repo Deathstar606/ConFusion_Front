@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Label, Modal, ModalHeader, ModalBody, Button, Row, Col, Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaAngleLeft } from "react-icons/fa6";
 import { MdOutlineDeliveryDining } from "react-icons/md";
-import { Control, LocalForm } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseurl';
 import './DishBreadcrumb.css'; // Import your custom CSS
@@ -30,25 +29,80 @@ const Breadcrumbs = ({ items }) => {
     );
 };
 
-function RenderDish({ dish, favorite, postFavorite }) {
+function RenderDish({ dish, addDish }) {
+    const [quant, setQuant] = useState(false);
+    const handleOrd = () => {
+        setQuant(!quant);
+    };
+
+    const [quantity, setQuantity] = useState(1);
+/*     const [orders, setOrders] = useState([]);
+
+    const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    useEffect(() => {
+        setOrders(storedOrders);
+    }, []); */
+
+    const HandleAdd = () => {
+        /* event.preventDefault(); */
+        addDish({_id: dish._id, quantity: quantity})
+/*         const updatedOrders = [...orders, { _id: dish._id, quantity: quantity }];
+        console.log(updatedOrders)
+        setOrders(updatedOrders);
+        localStorage.setItem('orders', JSON.stringify(updatedOrders));
+        console.log(orders); */
+        handleOrd();
+    };
+
     return (
         <div className="col-12 col-md-5 mb-3">
             <Card>
                 <CardImg top src={baseUrl + dish.image} alt={dish.name} />
                 <CardImgOverlay>
-                    <Button outline color="light" onClick={() => favorite ? console.log('Already favorite') : postFavorite(dish._id)}>
-                        {favorite ?
-                            <MdOutlineDeliveryDining/>
-                            :
-                            <MdOutlineDeliveryDining/>
-                        }
+                    <Button outline color="light" onClick={handleOrd}>
+                        <MdOutlineDeliveryDining/>
                     </Button>
                 </CardImgOverlay>
                 <CardBody style={{backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)"}}>
-                    <CardTitle>{dish.name}</CardTitle>
+                    <CardTitle>{dish.name} <span className='text-muted ml-2'>{dish.price} Tk</span></CardTitle>
                     <CardText>{dish.description}</CardText>
                 </CardBody>
             </Card>
+            {quant && (
+                <AnimatePresence mode='wait'>
+                    <motion.div 
+                    className='modal-back'
+                    initial={{ opacity: 0}}
+                    animate={{ opacity: 1}}
+                    exit={{ opacity: 0}}>
+                        <motion.div 
+                        className='d-flex justify-content-center m-5'
+                        initial={{ opacity: 0, y: -70}}
+                        animate={{ opacity: 1, y: 0}}
+                        exit={{ opacity: 0, y: -70}}
+                        transition={{duration: .25, delay: .25}}>
+                        <form className="reservation-form" onSubmit={(e) => { e.preventDefault(); HandleAdd(); }}>
+                            <h1>Select Quantity</h1>
+                            <div className="form-group">
+                                <select value={quantity} onChange={(e) => setQuantity(e.target.value)} required>
+                                    <option value="" disabled>Select Quantity</option>
+                                    <option value="1">1 </option>
+                                    <option value="2">2 </option>
+                                    <option value="3">3 </option>
+                                    <option value="4">4 </option>
+                                    <option value="5">5 </option>
+                                    <option value="6">6 </option>
+                                </select>
+                            </div>
+                            <div className='home-butt'>
+                                <button type="submit" className='butt'>Add To Basket</button>
+                            </div>
+                        </form>
+                        </motion.div>
+                    </motion.div>
+                </AnimatePresence>
+            )}
         </div>
     );
 }
@@ -107,18 +161,25 @@ const CommentForm = (props) => {
 
     return (
         <div>
-            <Button className="mb-4" outline onClick={handleMod}>
-                <span className="fa fa-pencil fa-lg"></span> Submit Comment
-            </Button>
+            <div onClick={handleMod} className='pb-3 pt-3 home-butt'>
+                <button
+                className='butt'
+                type="submit"
+                >
+                    Submit Comment
+                </button>
+            </div>
             <AnimatePresence mode='wait'>
                 {modal && (
-                    <motion.div 
+                    <motion.div
+                        /* onClick={handleMod} */ 
                         className='modal-back'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                     >
-                        <motion.div 
+                        <motion.div
+                            /* onClick={(e) => e.stopPropagation()} */ 
                             className='d-flex justify-content-center m-5'
                             initial={{ opacity: 0, y: -70 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -199,7 +260,7 @@ const DishDetail = (props) => {
                         </div>
                     </div>
                     <div className="row" style={{overflow: "hidden"}}>
-                        <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
+                        <RenderDish dish={props.dish} addDish={props.addDish} />
                         <RenderComments comments={props.comments}
                             postComment={props.postComment}
                             dishId={props.dish._id} />

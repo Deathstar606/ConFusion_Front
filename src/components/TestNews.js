@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { generateEmailHtml } from '../emails';
-import Email from '../emails';
+import {OrderEmail} from '../emails';
 import axios from 'axios';
 import { baseUrl } from '../shared/baseurl';
 import styled from 'styled-components';
@@ -173,7 +173,7 @@ export const SendNewsletter = ({ subscribers }) => {
                 </div>
             </div>
             <h2 style={{ textAlign: 'center', marginTop: '40px' }}>Preview</h2>
-            <Email name={"First Name"} message={formData.message} imageUrl={formData.imageUrl} />
+            <OrderEmail name={"First Name"} message={formData.message} imageUrl={formData.imageUrl} />
         </div>
     );
 };

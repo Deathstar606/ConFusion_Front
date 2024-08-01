@@ -1,47 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import {
+  Form,
+  FormGroup,
+  Input,
+  Label,
   Navbar,
   NavbarBrand,
   Nav,
   NavItem,
+  Row,
+  Col,
+  CardImg,
+  Container
 } from 'reactstrap';
 import Brand from "../image/icons8-restaurant-64.png"
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import events from "../image/Header/pexels-dana-tentis-118658-750073.jpg"
-import catering from "../image/Header/pexels-leslie-torres-229759733-12087878.jpg"
-import gift from "../image/Header/Gift-Card-Mag-Stripe-Gold-Foil-The-Glass-Knife-HS094278-Sample.jpg"
 import { baseUrl } from '../shared/baseurl';
 import axios from 'axios';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { MdOutlineNoFood } from "react-icons/md";
+import { FaTimes } from 'react-icons/fa';
 import MediaQuery from 'react-responsive';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import "./reserveForm.css"
 import Burger from './Burger';
 
-export const Reserve = ({setResMod}) => {
+export const Reserve = ({showMod}) => {
+  const [email, setEmail] = useState('');
   const [people, setPeople] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
 
   const today = new Date().toISOString().split('T')[0];
 
+  useEffect(() => {
+    const savedFormData = localStorage.getItem('formData');
+    if (savedFormData) {
+      const formData = JSON.parse(savedFormData);
+      setEmail(formData.email || '');
+    }
+  }, []);
+
   const handleSubmitRes = async (event) => {
       event.preventDefault();
       try {
-        const response = await axios.post(baseUrl + 'reservation', { people: people, date: date, time: time })
-        alert("Reservation confirmed")
+        const response = await axios.post(baseUrl + 'reservation', { people: people, date: date, time: time, email: email, total: 10*people })
+        window.open(response.data.url);
         setPeople("")
         setTime("")
         setDate("")
-        setResMod(false)
+        showMod()
     } catch (error) {
         alert("Reservation failed")
-        console.error(error);
+        console.log(error.response.data);
     }
+    alert("Reservation confirmed")
   };
 
   return (
@@ -56,92 +72,122 @@ export const Reserve = ({setResMod}) => {
         animate={{ opacity: 1, y: 0}}
         exit={{ opacity: 0, y: -70}}
         transition={{duration: .25, delay: .25}}>
-              <form className="reservation-form" onSubmit={handleSubmitRes}>
-                <h1>Reserve a Table</h1>
-                <div className="form-group">
-                  <select value={people} onChange={(e) => setPeople(e.target.value)} required>
-                    <option value="" disabled>Select People</option>
-                    <option value="1">1 Person</option>
-                    <option value="2">2 People</option>
-                    <option value="3">3 People</option>
-                    <option value="4">4 People</option>
-                    <option value="5">5 People</option>
-                    <option value="6">6 People</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <input 
-                    type="date" 
-                    value={date} 
-                    onChange={(e) => setDate(e.target.value)} 
-                    min={today}
-                    required 
-                  />
-                </div>
-                <div className="form-group">
-                  <input 
-                    type="time" 
-                    value={time} 
-                    onChange={(e) => setTime(e.target.value)} 
-                    required 
-                  />
-                </div>
-                <div className='home-butt'>
-                  <button type="submit" className='butt'>Find a Table</button>
-                </div>
-              </form>
+          <Container>
+            <Row className="justify-content-center ml-1 mr-1">
+              <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px", position: "relative"}}>
+                <Form onSubmit={handleSubmitRes}>
+                  <FaTimes onClick={showMod} style={{position: "absolute", top: "10px", right: "10px"}}/>
+                  <h1 className='text-center pb-4'>Reserve a Table</h1>
+                  <FormGroup>
+                    <Input
+                      style={{
+                      border: "2px solid black",
+                      backgroundColor: "transparent",
+                      padding: "5px",
+                      width: "100%"
+                      }}
+                      className="rounded-0"  
+                      type="select" 
+                      value={people} 
+                      onChange={(e) => setPeople(e.target.value)} 
+                      required
+                    >
+                      <option value="" disabled>Select People</option>
+                      <option value="1">1 Person</option>
+                      <option value="2">2 People</option>
+                      <option value="3">3 People</option>
+                      <option value="4">4 People</option>
+                      <option value="5">5 People</option>
+                      <option value="6">6 People</option>
+                    </Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <Input
+                      style={{
+                        border: "2px solid black",
+                        backgroundColor: "transparent"
+                      }}
+                      className="rounded-0" 
+                      type="date" 
+                      value={date} 
+                      onChange={(e) => setDate(e.target.value)} 
+                      min={today} 
+                      required 
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Input
+                      style={{
+                        border: "2px solid black",
+                        backgroundColor: "transparent"
+                      }}
+                      className="rounded-0"  
+                      type="time" 
+                      value={time} 
+                      onChange={(e) => setTime(e.target.value)} 
+                      required 
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Input
+                      style={{
+                        border: "2px solid black",
+                        backgroundColor: "transparent"
+                      }}
+                      className="rounded-0"  
+                      type="email" 
+                      value={email} 
+                      placeholder="Email" 
+                      onChange={(e) => setEmail(e.target.value)} 
+                      required 
+                    />
+                  </FormGroup>
+                  <div className="home-butt d-flex justify-content-center">
+                    <button type="submit" className="butt">Find a Table</button>
+                  </div>
+                </Form>                
+              </Col>
+            </Row>
+          </Container>
       </motion.div>
     </motion.div>
   )
 }
 
 const Example = (props) => {
-
   const location = useLocation();
-    // State to keep track of the active link
+  const navigate = useNavigate();
   const [activeLink, setActiveLink] = useState('');
 
   useEffect(() => {
     setActiveLink(location.pathname);
   }, [location]);
 
-  // Function to handle click on NavLink
   const handleNavLinkClick = (path) => {
     setActiveLink(path);
   };
+
+  const [ordPage, setOrdPage] = useState(false)
+  const handleOrdPage = () => {
+    setOrdPage(!ordPage)
+  }
+  
+  let total = 0
   
   const [ResMod, setResMod] = useState(false)
-/*   const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const formRef = useRef(null); */
-
-
-/*   const handleShow = () => {
-    setModal(true);
-  };
-
-  const handleHide = () => {
-    setModal(false);
-  }; */
 
   const handleShowRes = () => {
-    setResMod(true);
+    setResMod(!ResMod);
   };
 
-/*   const handleSubmit = (e) => {
-    e.preventDefault();
-    props.loginUser({username: name, password: password});
-    setName('');
-    setPassword('');
-    handleHide()
-  }; */
+  if (props.headers.headers.length > 0) {
+    const handleClick = () => {
+      localStorage.setItem('activeCategory', 'Sandwiches');  // Set activeCategory in localStorage
+      navigate('/menu');  // Navigate to /menu
+    };
 
-/*   const handleLogout = () => {
-    props.logoutUser();
-  } */
-
-  return (
-    <div>
+    return (
+      <div>
       <div className='nav-c'>
         <Navbar light expand="md">
           <NavbarBrand href="http://Deathstar606.github.io/ConFusion_Front/">
@@ -152,7 +198,7 @@ const Example = (props) => {
                   <NavItem>
                     <NavLink
                       to="/menu"
-                      activeClassName="active"
+                      activeclassname="active"
                       onClick={() => handleNavLinkClick('/menu')} // Update active link on click
                     >
                       <div className={`nav-items pr-2 pl-2 ${activeLink === '/menu' ? 'active' : ''}`}>
@@ -164,7 +210,7 @@ const Example = (props) => {
                   <NavItem>
                     <NavLink
                       to="/location"
-                      activeClassName="active"
+                      activeclassname="active"
                       onClick={() => handleNavLinkClick('/location')} // Update active link on click
                     >
                       <div className={`nav-items pr-2 pl-2 ${activeLink === '/location' ? 'active' : ''}`}>
@@ -176,7 +222,7 @@ const Example = (props) => {
                   <NavItem>
                     <NavLink
                       to="/events"
-                      activeClassName="active"
+                      activeclassname="active"
                       onClick={() => handleNavLinkClick('/events')} // Update active link on click
                     >
                       <div className={`nav-items pr-2 pl-2 ${activeLink === '/events' ? 'active' : ''}`}>
@@ -187,8 +233,20 @@ const Example = (props) => {
                   </NavItem>
                   <NavItem>
                     <NavLink
+                      to="/catering"
+                      activeclassname="active"
+                      onClick={() => handleNavLinkClick('/catering')} // Update active link on click
+                    >
+                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/catering' ? 'active' : ''}`}>
+                        Catering
+                        <div className='nav-items-inner'/>
+                      </div>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
                       to="/gift"
-                      activeClassName="active"
+                      activeclassname="active"
                       onClick={() => handleNavLinkClick('/gift')} // Update active link on click
                     >
                       <div className={`nav-items pr-2 pl-2 ${activeLink === '/gift' ? 'active' : ''}`}>
@@ -197,125 +255,95 @@ const Example = (props) => {
                       </div>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink
-                      to="/gallery"
-                      activeClassName="active"
-                      onClick={() => handleNavLinkClick('/gallery')} // Update active link on click
-                    >
-                      <div className={`nav-items pr-2 pl-2 ${activeLink === '/gallery' ? 'active' : ''}`}>
-                        Gallery
-                        <div className='nav-items-inner'/>
+                  <NavItem className="mt-2 mr-4 ml-3" style={{ position: 'relative' }}>
+                    <MdOutlineNoFood onClick={handleOrdPage} color="rgb(255, 193, 0)" size={25}/>
+                    {props.orders.orders.length > 0 && (
+                      <div className="bubble">
+                        {props.orders.orders.length}
                       </div>
-                    </NavLink>
+                    )}
                   </NavItem>
                   <NavItem>
                     <div onClick={handleShowRes} className="text-center rounded-0 butt">
                       Reservation
                     </div>
                   </NavItem>
-                  <NavItem>
+{/*                   <NavItem>
                     <Link to="/order">
                       <div className="text-center rounded-0 butt">
                         Order Now
                       </div>
                     </Link>
-                  </NavItem>
+                  </NavItem> */}
                 </MediaQuery>
                 <MediaQuery maxWidth={639}>
                   <Burger/>
                 </MediaQuery>
-
-{/*                   {!props.auth.isAuthenticated ?
-                    <div className='mt-2 ml-4'>
-                      <div onClick={handleShow}>
-                        <FaUser/>
-                        {props.auth.isFetching ?
-                          <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                          : null
-                        }
-                      </div>
-                    </div>
-                    :
-                    <div>
-                      <div className="navbar-text mr-3 text-white">{props.auth.user.username}</div>
-                      <Button outline onClick={handleLogout}>
-                        <span className="fa fa-sign-out fa-lg"></span> Logout
-                        {props.auth.isFetching ?
-                          <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                          : null
-                        }
-                      </Button>
-                    </div>
-                  } */}
               </Nav>
         </Navbar>
       </div>
-{/*       <AnimatePresence>
-        {modal && (
-                    <motion.div 
-                    className='modal-back'
-                    initial={{ opacity: 0}}
-                    animate={{ opacity: 1}}
-                    exit={{ opacity: 0}}>
-                      <motion.div 
-                      className='d-flex justify-content-center m-5'
-                      initial={{ opacity: 0, y: -70}}
-                      animate={{ opacity: 1, y: 0}}
-                      exit={{ opacity: 0, y: -70}}>
-                        <Container style={{position: "absolute"}}>
-                          <Row className="justify-content-center ml-1 mr-1">
-                            <Col md={5} className="p-4" style={{borderRadius: "20px", backgroundColor: "whitesmoke", border: "black solid 2px" }}>
-                              <h2 className="text-center mb-4">Login</h2>
-                              <Form ref={formRef} onSubmit={handleSubmit} >
-                                <FormGroup floating controlId="formName" className='mb-2'>
-                                  <Label>Username</Label>
-                                  <input
-                                        style={{
-                                          marginLeft: "20px",
-                                          border: "0px",
-                                          backgroundColor: "transparent",
-                                          boxShadow: "none",
-                                          borderColor: "transparent"
-                                        }}
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                  />
-                                </FormGroup>
-                                <FormGroup controlId="formEmail" className='mb-3'>
-                                  <Label>Password</Label>
-                                  <input
-                                        style={{
-                                          marginLeft: "20px",
-                                          border: "0px",
-                                          backgroundColor: "transparent",
-                                          boxShadow: "none",
-                                          borderColor: "transparent"
-                                        }}
-                                    type="password"
-                                    placeholder="Enter your password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                  />
-                                </FormGroup>
-                                <div className='d-flex justify-content-center pb-2'>
-                                  <Button  variant="primary" type="submit">
-                                    Login
-                                  </Button>
-                                </div>
-                              </Form>
-                            </Col>
-                          </Row>
-                        </Container>
-                      </motion.div>
-                    </motion.div>
-        )}
-      </AnimatePresence> */}
       <AnimatePresence mode='wait'>
         {ResMod && (
-          <Reserve setResMod={setResMod}/>
+          <Reserve showMod={handleShowRes}/>
+        )}
+      </AnimatePresence>
+      <AnimatePresence mode='wait'>
+        {ordPage && (
+          <motion.div
+            onClick={handleOrdPage} 
+            className='modal-back'
+            initial={{ opacity: 0}}
+            animate={{ opacity: 1}}
+            exit={{ opacity: 0}}>
+            <motion.div
+              onClick={(e) => e.stopPropagation()} // Prevent click event propagation
+              initial={{ x: '100%' }}
+              animate={{ x: '0%' }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              style={{
+                backgroundColor: "rgb(0, 0, 0)",
+                color: "rgb(255, 193, 0)",
+                width: '500px', // Adjust width as needed
+                height: '100%', // Full height of the viewport
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', // Box shadow for some depth
+                position: 'fixed', // Fix to the right side
+                top: 0,
+                right: 0
+              }}>
+              <ul className='p-3' style={{ padding: 0, listStyleType: 'none' }}>
+                {props.orders.orders.map((order, index) => {
+                  const matchingDish = props.dishes.dishes
+                    .flatMap(dish => dish.items)
+                    .find(di => di._id === order._id);
+                  let price = matchingDish.price * order.quantity
+                  total = total + price
+                  
+                  return matchingDish ? (
+                    <>
+                      <Row key={index} style={{ marginBottom: '20px' }}>
+                        <Col md={4} className="mx-0">
+                          <CardImg src={baseUrl + matchingDish.image} alt={matchingDish.name}></CardImg>
+                        </Col>
+                        <Col md={8}>
+                          <strong>{matchingDish.name}<br /></strong>
+                          <strong>Price:</strong> {matchingDish.price} Tk<br />
+                          <strong>Quantity:</strong> {order.quantity}
+                        </Col>
+                      </Row>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button className='butt' outline onClick={() => props.removeOrder(order._id, order.quantity)}>Remove</button>
+                      </div>
+                    </>
+                  ) : <h3>Food cart is empty</h3>
+                })}
+              </ul>
+              <div className='ml-3 mb-1'>Total: {total} Tk </div>
+              <Link to="/order">
+                <button onClick={handleOrdPage} className='butt ml-3'>Place Order</button>
+              </Link>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
       <Swiper
@@ -330,36 +358,44 @@ const Example = (props) => {
         modules={[Autoplay, Pagination]}
         speed={2500}
       >
-       <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${events})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
-          <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
-            <div className="rounded-0 butt" style={{fontSize: "21px"}}>
-              Demo
+        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh' }}>
+          <CardImg src={baseUrl + props.headers.headers[0].image} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}/>
+          <div className="d-flex flex-column align-items-center justify-content-center w-100 p-3" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'white' }}>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>{props.headers.headers[0].head}</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>{props.headers.headers[0].subhead}</h6>
+            <div className="rounded-0 butt" style={{fontSize: "21px"}} onClick={handleClick}>
+              {props.headers.headers[0].action}
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${catering})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
-          <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
-            <div className="rounded-0 butt" style={{fontSize: "21px"}}>
-              Demo
-            </div>
+        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh' }}>
+          <CardImg src={baseUrl + props.headers.headers[1].image} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}/>
+          <div className="d-flex flex-column align-items-center justify-content-center w-100 p-3" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'white' }}>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>{props.headers.headers[1].head}</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>{props.headers.headers[1].subhead}</h6>
+            <Link to="/gift">
+              <div className="rounded-0 butt" style={{fontSize: "21px"}}>
+                {props.headers.headers[1].action}
+              </div>
+            </Link>
           </div>
         </SwiperSlide>
-        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ height: "100vh", backgroundImage: `url(${gift})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center" }}>
-          <div className="d-flex flex-column align-items-center">
-            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>Hello There It's A Demo Header</h1>
-            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>Some Extra Descriptions</h6>
-            <div className="rounded-0 butt" style={{fontSize: "21px"}}>
-              Demo
-            </div>
+        <SwiperSlide className='d-flex justify-content-center align-items-center' style={{ position: 'relative', height: '100vh' }}>
+          <CardImg src={baseUrl + props.headers.headers[2].image} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}/>
+          <div className="d-flex flex-column align-items-center justify-content-center w-100 p-3" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center', color: 'white' }}>
+            <h1 className="mb-2 text-white pb-3 text-center" style={{fontSize: "clamp(44px, 4vw, 70px)"}}>{props.headers.headers[2].head}</h1>
+            <h6 className='mb-3 text-white' style={{fontSize: "clamp(18px, 1vw, 40px)"}}>{props.headers.headers[2].subhead}</h6>
+            <Link to="/events">
+              <div className="rounded-0 butt" style={{fontSize: "21px"}}>
+                {props.headers.headers[2].action}
+              </div>
+            </Link>
           </div>
         </SwiperSlide>
       </Swiper>
     </div>
-  );
+    )
+  }
 };
 
 export default Example;

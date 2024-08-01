@@ -59,6 +59,9 @@ function Footer() {
                                 <Link to="/aboutus">
                                     <div style={{ fontWeight: "300", fontSize: "20px", color: "rgb(255, 193, 0)" }} className="pt-1 pr-3">About</div>
                                 </Link>
+                                <Link to="/gallery">
+                                    <div style={{ fontWeight: "300", fontSize: "20px", color: "rgb(255, 193, 0)" }} className="pt-1 pr-3">Gallery</div>
+                                </Link>
                                 <div style={{ fontWeight: "300", fontSize: "20px", color: "rgb(255, 193, 0)" }} className="pt-1 pr-3">Contact Us</div>
                                 <div onClick={handleShow} className="butt">Email-Signup</div>
                             </Col>

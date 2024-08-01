@@ -13,7 +13,33 @@ export const LEADERS_LOADING = 'LEADERS_LOADING';
 export const SUBSCRIBER_LOADING = 'SUBSCRIBER_LOADING';
 export const SUBSCRIBER_FAILED = 'SUBSCRIBER_FAILED';
 export const ADD_SUBSCRIBER = 'ADD_SUBSCRIBER';
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+
+////////////////////////////////////////
+
+export const ADD_ORDER = 'ADD_ORDER';
+export const ADD_ORDERS = 'ADD_ORDERS';
+export const ORDERS_FAILED = 'ORDERS_FAILED';
+
+export const ADD_GIFTS = 'ADD_GIFTS';
+export const GIFTS_LOADING = 'GIFTS_LOADING';
+export const GIFTS_FAILED = 'GIFTS_FAILED';
+
+export const ADD_EVENTS= 'ADD_EVENTS';
+export const EVENTS_LOADING = 'EVENTS_LOADING';
+export const EVENTS_FAILED = 'EVENTS_FAILED';
+
+export const ADD_HOME = 'ADD_HOME';
+export const HOME_LOADING = 'HOME_LOADING';
+export const HOME_FAILED = 'HOME_FAILED';
+
+export const ADD_CATERING = 'ADD_CATERING';
+export const CATERING_LOADING = 'CATERING_LOADING';
+export const CATERING_FAILED = 'CATERING_FAILED';
+
+export const ADD_HEADERS = 'ADD_HEADERS';
+export const HEADERS_LOADING = 'HEADERS_LOADING';
+export const HEADERS_FAILED = 'HEADERS_FAILED';
+/* export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOG_ADMIN = 'LOG_ADMIN';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -24,4 +50,4 @@ export const SIGN_REQUEST = "SIGN_REQUEST"
 export const SIGN_ERROR = "SIGN_ERROR"
 export const FAVORITES_LOADING = 'FAVORITES_LOADING';
 export const FAVORITES_FAILED = 'FAVORITES_FAILED';
-export const ADD_FAVORITES = 'ADD_FAVORITES';
+export const ADD_FAVORITES = 'ADD_FAVORITES'; */

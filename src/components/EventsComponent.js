@@ -1,31 +1,199 @@
-import { useRef } from "react";
-import { Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Container, Row, Col, Button } from 'reactstrap';
+import { useRef, useState } from "react";
+import { Form, FormGroup, CardImg, Label, Container, Input, Row, Col } from 'reactstrap';
+import axios from "axios";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from '../shared/baseurl';
-import { motion, useInView as Fview } from "framer-motion";
+import { AnimatePresence, motion, useInView as Fview } from "framer-motion";
 import MediaQuery from "react-responsive";
-import dish1 from "../image/Events/Blog-Designs.jpg"
-import dish2 from "../image/Events/index2.jpg";
 
 const variants = {
-    initial: {
-      pathLength: 0,
-      pathOffset: 1,
+  initial: {
+    pathLength: 0,
+    pathOffset: 1,
+  },
+  animate: {
+    pathLength: 1,
+    pathOffset: 0,
+    transition: {
+      duration: 2,
+      ease: "easeInOut",
     },
-    animate: {
-      pathLength: 1,
-      pathOffset: 0,
-      transition: {
-        duration: 2,
-        ease: "easeInOut",
-      },
-    },
+  },
+};
+
+function Event({ eve, index }) {
+  const [modal, setModal] = useState(false);
+  const [email, setEmail] = useState('');
+  const formRef = useRef(null);
+
+  const handleShow = () => {
+    setModal(!modal);
   };
 
-function Events() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {email: email}
+    try {
+      const pay = await axios.post('http://localhost:9000/events/ticket', data)
+      window.open(pay.data.url);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  }
 
+  return (
+    <>
+      {index % 2 === 0 ? (
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          transition={{ duration: 1, type: "tween", ease: "easeIn" }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <Row>
+            <Col md={8}>
+              <CardImg src={baseUrl + eve.image} />
+            </Col>
+            <Col md={4} className="d-flex justify-content-center align-items-center">
+              <div>
+                <div className="text-center pt-4" style={{ fontSize: "24px" }}>
+                  {eve.description || "Description Goes Here"}
+                </div>
+                  {eve.action && (
+                    <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
+                      <div className="rounded-0 butt">
+                          Purchase Ticket
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </Col>
+          </Row>
+        </motion.div>
+      ) : (
+        <div>
+          <MediaQuery minWidth={640}>
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              transition={{ duration: 1, type: "tween", ease: "easeIn" }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              <Row>
+                <Col md={4} className="d-flex justify-content-center align-items-center">
+                  <div>
+                    <div className="text-center pt-4" style={{ fontSize: "24px" }}>
+                      {eve.description || "Description Goes Here"}
+                    </div>
+                    {eve.action && (
+                      <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
+                        <div className="rounded-0 butt">
+                          Purchase Ticket
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Col>
+                <Col md={8}>
+                  <CardImg src={baseUrl + eve.image} />
+                </Col>
+              </Row>
+            </motion.div>
+          </MediaQuery>
+          <MediaQuery maxWidth={639}>
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              transition={{ duration: 1, type: "tween", ease: "easeIn" }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              <Row>
+                <Col md={8}>
+                  <CardImg src={baseUrl + eve.image} />
+                </Col>
+                <Col md={4} className="d-flex justify-content-center align-items-center">
+                  <div>
+                    <div className="text-center pt-4" style={{ fontSize: "24px" }}>
+                      {eve.description || "Description Goes Here"}
+                    </div>
+                    {eve.action && (
+                      <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
+                        <div className="rounded-0 butt">
+                          Purchase Ticket
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </Col>
+              </Row>
+            </motion.div>
+          </MediaQuery>
+            <AnimatePresence>
+              {modal && (
+                  <motion.div
+                      className='modal-back'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                  >
+                      <motion.div
+                          className='d-flex justify-content-center m-5'
+                          initial={{ opacity: 0, y: -500 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -500 }}
+                          transition={{ duration: 0.25, delay: 0.25 }}
+                      >
+                          <Container style={{ position: "absolute" }}>
+                              <Row className="justify-content-center ml-1 mr-1">
+                                  <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px" }}>
+                                      <h2 className="text-center mb-4">Newsletter</h2>
+                                      <p className='text-center mb-4'>You will get regular updates on our invents</p>
+                                      <Form ref={formRef} onSubmit={handleSubmit}>
+                                          <FormGroup>
+                                              <Label>Email</Label>
+                                              <Input
+                                                  style={{
+                                                      border: "2px solid black",
+                                                      backgroundColor: "transparent"
+                                                  }}
+                                                  className="rounded-0"
+                                                  type="text"
+                                                  placeholder="Email"
+                                                  value={email}
+                                                  onChange={(e) => setEmail(e.target.value)}
+                                              />
+                                          </FormGroup>
+                                          <div className='d-flex justify-content-center pb-2 pt-2 home-butt'>
+                                              <button
+                                                  className='butt'
+                                                  type="submit"
+                                              >
+                                                  Confirm
+                                              </button>
+                                          </div>
+                                      </Form>
+                                  </Col>
+                              </Row>
+                          </Container>
+                      </motion.div>
+                  </motion.div>
+              )}
+          </AnimatePresence>
+        </div>
+      )}
+    </>
+  );
+}
+
+function Events({events}) {
   const ref2 = useRef(null)
   const isInview2 = Fview(ref2, { once: true })
+
+  const even = events.events.map((eve, index) => {
+    return (
+      <Event key={index} eve={eve} index={index} />
+    )
+  })
 
   return (
     <>
@@ -47,61 +215,7 @@ function Events() {
           </div>
           <h2 className="text-center row-header" style={{fontSize: "clamp(54px, 4vw, 100px)"}}>Heading Text</h2>
           <p className="text-center pb-5">Some Description Text</p>
-          <motion.div initial={{ y: 50, opacity: 0 }} transition={{ duration: 1, type: "tween", ease: "easeIn" }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}>
-            <Row>
-              <Col md={8}>
-                <CardImg src={dish1}></CardImg>
-              </Col>
-              <Col md={4} className="d-flex justify-content-center align-items-center">
-                <div>
-                  <div className="text-center pt-4" style={{ fontSize: "24px" }}>Description Goes Here</div>
-                  <div className="d-flex justify-content-center pt-2 pb-4 home-butt">
-                    <div className="rounded-0 butt">
-                      Demo
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </motion.div>
-          <MediaQuery minWidth={640}>
-            <motion.div initial={{ y: 50, opacity: 0 }} transition={{ duration: 1, type: "tween", ease: "easeIn" }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}>
-              <Row>
-                <Col md={4} className="d-flex justify-content-center align-items-center">
-                  <div>
-                    <div className="text-center pt-4" style={{ fontSize: "24px" }}>Description Goes Here</div>
-                    <div className="d-flex justify-content-center pt-2 pb-4 home-butt">
-                      <div className="rounded-0 butt">
-                        Demo
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col md={8}>
-                  <CardImg src={dish2}></CardImg>
-                </Col>
-              </Row>
-            </motion.div>
-          </MediaQuery>
-          <MediaQuery maxWidth={639}>
-            <motion.div initial={{ y: 50, opacity: 0 }} transition={{ duration: 1, type: "tween", ease: "easeIn" }} whileInView={{ y: 0, opacity: 1 }} viewport={{ once: true }}>
-              <Row>
-                <Col md={8}>
-                  <CardImg src={dish2}></CardImg>
-                </Col>
-                <Col md={4} className="d-flex justify-content-center align-items-center">
-                  <div>
-                    <div className="text-center pt-4" style={{ fontSize: "24px" }}>Description Goes Here</div>
-                    <div className="d-flex justify-content-center pt-2 pb-4 home-butt">
-                      <div className="rounded-0 butt">
-                        Demo
-                      </div>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </motion.div>
-          </MediaQuery>
+          {even}
         </Container>
       </motion.div>
     </>
