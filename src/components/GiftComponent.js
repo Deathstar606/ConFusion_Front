@@ -163,8 +163,7 @@ function Gift({gifts}) {
                           <Container>
                               <Row className="justify-content-center ml-1 mr-1">
                                   <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px", position: "relative"}}>
-                                      <h2 className="text-center mb-4">Newsletter</h2>
-                                      <p className='text-center mb-4'>You will get regular updates on our invents</p>
+                                      <h2 className="text-center mb-3">Purchase Gift Card</h2>
                                       <Form ref={formRef} onSubmit={handleSubmit}>
                                       <FaTimes onClick={handleShow} style={{position: "absolute", top: "10", right: "10"}}/>
                                           <FormGroup>

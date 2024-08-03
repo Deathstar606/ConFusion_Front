@@ -31,7 +31,9 @@ function TicketSuccess() {
     }, [tranId, email]); // Add dependencies
 
     return (
-        <h1>Ticket Purchase Successful</h1>
+        <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
+            <h1 className='text-center p-4'>Ticket purchase Has Been Successful</h1>
+        </div>
     );
 }
 

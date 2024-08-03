@@ -8,6 +8,7 @@ import { Orders } from './orders';
 import { Headers } from './headers';
 import { Gifts } from './gifts';
 import { Catering } from './catering';
+import { Seats } from './reservation';
 import { Home } from './home';
 import { Events } from './events';
 import { Subscribers } from './subscribers';
@@ -26,6 +27,7 @@ export const ConfigStore = () => {            //used in app.js
             headers: Headers,
             home: Home,
             catering: Catering,
+            seats: Seats,
             gifts: Gifts,
             events: Events,
             leaders: Leaders,

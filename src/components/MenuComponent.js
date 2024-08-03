@@ -45,39 +45,56 @@ function RenderButtons({ category, changer, activeCategory, setActiveCategory })
 }
 
 function RenderMenu({ items, rats }) {
+    console.log(items);
     const filteredRats = rats.filter(rat => rat.dish === items._id);
     const sum = filteredRats.reduce((acc, rat) => acc + rat.rating, 0);
     const count = filteredRats.length;
     const avg = count ? (sum / count).toFixed(1) : 0;
 
     return (
-        <>
-            <Col md={4} className="px-0">
-                <AnimatePresence mode="wait">
-                    {items && (
-                        <motion.div
-                            key={items._id}
-                            style={{ scale: "0.9" }}
-                            initial={{ opacity: 0, y: -500 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                        >
-                            <h3>
-                                {items.name}
-                                <span className="ml-3" style={{ fontSize: "18px" }}>
-                                    {avg}/5⭐
-                                </span>
-                            </h3>
-                            <Link to={`/menu/${items._id}`}>
-                                <CardImg src={baseUrl + items.image} alt={items.name} />
-                            </Link>
-                            <h4 className="mt-3">{items.ingreds}</h4>
-                            <h5 className="text-muted">{items.price} TK</h5>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </Col>
-        </>
+        <Col md={4} className="px-0">
+            <AnimatePresence mode="wait">
+                {items && (
+                    <motion.div
+                        key={items._id}
+                        style={{ scale: "0.9" }}
+                        initial={{ opacity: 0, y: -500 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.5 }}
+                    >
+                        {items.availability ? (
+                            <>
+                                <h3>
+                                    {items.name}
+                                    <span className="ml-3" style={{ fontSize: "18px" }}>
+                                        {avg}/5⭐
+                                    </span>
+                                </h3>
+                                <Link to={`/menu/${items._id}`}>
+                                    <CardImg src={baseUrl + items.image} alt={items.name} />
+                                </Link>
+                                <h4 className="mt-3">{items.ingreds}</h4>
+                                <h5 className="text-muted">{items.price} TK</h5>
+                            </>
+                        ) : (
+                            <>
+                                <h3>
+                                    {items.name}
+                                    <span className="ml-3" style={{ fontSize: "18px" }}>
+                                        {avg}/5⭐
+                                    </span>
+                                </h3>
+                                <div style={{opacity: "0.6"}}>
+                                    <CardImg src={baseUrl + items.image} alt={items.name} />
+                                    <h4 className="mt-3">{items.ingreds}</h4>
+                                </div>
+                                <h5 className="text-danger">Currently Unavailable</h5>
+                            </>
+                        )}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </Col>
     );
 }
 
@@ -148,10 +165,10 @@ function Menu(props) {
                 <div style={{ backgroundColor: "rgb(255, 193, 0)" }}>
                     <h1 className="text-center pt-4 row-header" style={{ fontSize: "clamp(54px, 4vw, 100px)" }}>Menu</h1>
                     <Container style={{ maxWidth: "85%" }}>
-                        <Row className="d-flex justify-content-center pt-4 pb-4">
+                        <Row className="d-flex justify-content-center pt-2 pb-2">
                             {category}
                         </Row>
-                        <Row md={8} className="d-flex justify-content-center pb-4">
+                        <Row md={8} className="d-flex justify-content-center">
                             <MediaQuery minWidth={640}>
                                 <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
                                     {menu}

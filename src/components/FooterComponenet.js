@@ -1,19 +1,28 @@
 import { useState, useRef } from 'react';
 import { Row, Col, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { OrderBar } from './HeaderComponenet';
 import MediaQuery from 'react-responsive';
+import { FaTimes } from 'react-icons/fa';
 import { FaFacebook, FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { AnimatePresence, motion } from 'framer-motion';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
 
-function Footer() {
+function Footer({orders, dishes, removeOrder}) {
     const [fname, setFname] = useState('');
     const [lname, setLname] = useState('');
     const [email, setEmail] = useState('');
     const formRef = useRef(null);
     const [modal, setModal] = useState(false);
     const location = useLocation()
+
+    const [ordPage, setOrdPage] = useState(false)
+    const handleOrdPage = () => {
+      setOrdPage(!ordPage)
+    }
+    
+    let total = 0
 
     const handleSubmit = async (e) => {
         console.log("Initialized");
@@ -31,7 +40,7 @@ function Footer() {
     };
 
     const handleShow = () => {
-        setModal(true);
+        setModal(!modal);
     };
 
     const handleHide = () => {
@@ -82,9 +91,10 @@ function Footer() {
                                     exit={{ opacity: 0, y: 500 }}
                                     transition={{ duration: .25, delay: .25 }}
                                 >
-                                    <Container style={{ position: "absolute" }}>
+                                    <Container style={{ position: "relative" }}>
                                         <Row className="justify-content-center ml-1 mr-1">
                                             <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px" }}>
+                                                <FaTimes onClick={handleShow} style={{ position: "absolute", top: "10px", right: "10px" }} />
                                                 <h2 className="text-center mb-4">Newsletter</h2>
                                                 <p className='text-center mb-4'>You will get regular updates on our invents</p>
                                                 <Form ref={formRef} onSubmit={handleSubmit}>
@@ -150,12 +160,15 @@ function Footer() {
             </MediaQuery>
             {location.pathname !== '/order' && (
                 <MediaQuery maxWidth={639}>
-                    <Link to="/order">
-                        <div className="text-center" style={{ position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)", overflow: "hidden", padding: "10px 0px 0px 0px", textDecoration: "none" }}>
-                            <h2>Order Now</h2>
-                            <p>01793158660</p>
-                        </div>
-                    </Link>
+                    <div onClick={handleOrdPage} className="text-center" style={{ position: "sticky", bottom: 0, width: "100%", backgroundColor: "rgb(0, 0, 0)", color: "rgb(255, 193, 0)", overflow: "hidden", padding: "10px 0px 0px 0px", textDecoration: "none" }}>
+                        <h2>Order Now</h2>
+                        <p>01762277102</p>
+                    </div>
+                    {ordPage && (
+                    <AnimatePresence mode='wait'>
+                        <OrderBar orders={orders} dishes={dishes} total={total} handleOrdPage={handleOrdPage} removeOrder={removeOrder}/>
+                    </AnimatePresence>
+                    )}
                 </MediaQuery>
             )}
         </>

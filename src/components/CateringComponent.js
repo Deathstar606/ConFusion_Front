@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import demo from "../image/14 about.jpg"
 import axios from 'axios';
+import { FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { baseUrl } from '../shared/baseurl';
 
@@ -61,11 +62,12 @@ function CatItems ({item}) {
                             exit={{ opacity: 0, y: -500 }}
                             transition={{ duration: 0.25, delay: 0.25 }}
                         >
-                            <Container style={{ position: "absolute" }}>
+                            <Container style={{ position: "relative" }}>
                                 <Row className="justify-content-center ml-1 mr-1">
                                     <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px" }}>
-                                        <h2 className="text-center mb-4">Newsletter</h2>
-                                        <p className='text-center mb-4'>You will get regular updates on our invents</p>
+                                        <FaTimes onClick={handleShow} style={{ position: "absolute", top: "10px", right: "10px" }} />
+                                        <h2 className="text-center mb-2">Catering orders</h2>
+                                        <p className='text-center mb-2'>Notify us if you are intersed with our catering orders</p>
                                         <Form ref={formRef} onSubmit={handleSubmit}>
                                             <FormGroup>
                                                 <Label>Email</Label>

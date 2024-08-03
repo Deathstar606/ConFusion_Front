@@ -5,7 +5,7 @@ import { FaFacebook } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
 import './Burger.css';
 
-const BurgerMenu = () => {
+const BurgerMenu = ({resSeat}) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [reserveOpen, setreserveOpen] = useState(false);
@@ -17,6 +17,10 @@ const BurgerMenu = () => {
   const toggleReserve = () => {
     setreserveOpen(!reserveOpen)
     setMenuOpen(!menuOpen);
+  };
+
+  const toggleMod = () => {
+    setreserveOpen(!reserveOpen)
   };
 
 const [activeLink, setActiveLink] = useState('');
@@ -84,6 +88,19 @@ const handleNavLinkClick = (to) => {
           <div className='d-flex justify-content-center'>
             <li>
               <NavLink
+                to="/catering"
+                activeClassName="active"
+                onClick={() => {handleNavLinkClick('/catering'); toggleMenu()}} // Update active link on click
+              >
+                <div className={`burg-menu pr-2 pl-2 ${activeLink === '/catering' ? 'active' : ''}`}>
+                  Catering
+                </div>
+              </NavLink>
+            </li>
+          </div>
+          <div className='d-flex justify-content-center'>
+            <li>
+              <NavLink
                 to="/gift"
                 activeClassName="active"
                 onClick={() => {handleNavLinkClick('/gift'); toggleMenu()}} // Update active link on click
@@ -127,7 +144,7 @@ const handleNavLinkClick = (to) => {
               </div>
             </li>
           </div>
-          <li className='d-flex justify-content-center mt-5 pt-5'>
+          <li className='d-flex justify-content-center pt-4'>
             <div>
               <FaFacebook color="rgb(255, 193, 0)" size={40} className='mr-3'/>
               <FaWhatsapp color="rgb(255, 193, 0)" size={40} className='mr-3'/>
@@ -136,7 +153,7 @@ const handleNavLinkClick = (to) => {
         </ul>
       </div>
       {reserveOpen && (
-        <Reserve setResMod={toggleReserve}/>
+        <Reserve showMod={toggleMod} resSeat={resSeat}/>
       )}
     </div>
   );

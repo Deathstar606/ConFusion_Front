@@ -1,9 +1,11 @@
 import React from "react";
 
-function Result () {
+function PayFailure () {
     return (
-        <h1>Payment Has Failed</h1>
+        <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
+            <h1 className='text-center p-4'>Your payment has failed</h1>
+        </div>
     )
 }
 
-export default Result
+export default PayFailure

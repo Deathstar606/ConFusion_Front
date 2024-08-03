@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Form, FormGroup, CardImg, Label, Container, Input, Row, Col } from 'reactstrap';
 import axios from "axios";
+import { FaTimes } from 'react-icons/fa';
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from '../shared/baseurl';
 import { AnimatePresence, motion, useInView as Fview } from "framer-motion";
@@ -57,8 +58,9 @@ function Event({ eve, index }) {
             <Col md={4} className="d-flex justify-content-center align-items-center">
               <div>
                 <div className="text-center pt-4" style={{ fontSize: "24px" }}>
-                  {eve.description || "Description Goes Here"}
+                  {eve.name || "Description Goes Here"}
                 </div>
+                <p className="text-cener">{eve.description}</p>
                   {eve.action && (
                     <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
                       <div className="rounded-0 butt">
@@ -83,8 +85,9 @@ function Event({ eve, index }) {
                 <Col md={4} className="d-flex justify-content-center align-items-center">
                   <div>
                     <div className="text-center pt-4" style={{ fontSize: "24px" }}>
-                      {eve.description || "Description Goes Here"}
+                      {eve.name || "Description Goes Here"}
                     </div>
+                    <p className="text-center">{eve.description}</p>
                     {eve.action && (
                       <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
                         <div className="rounded-0 butt">
@@ -114,8 +117,9 @@ function Event({ eve, index }) {
                 <Col md={4} className="d-flex justify-content-center align-items-center">
                   <div>
                     <div className="text-center pt-4" style={{ fontSize: "24px" }}>
-                      {eve.description || "Description Goes Here"}
+                      {eve.name || "Description Goes Here"}
                     </div>
+                    <p className="text-center">{eve.description}</p>
                     {eve.action && (
                       <div onClick={handleShow} className="d-flex justify-content-center pt-2 pb-4 home-butt">
                         <div className="rounded-0 butt">
@@ -143,11 +147,12 @@ function Event({ eve, index }) {
                           exit={{ opacity: 0, y: -500 }}
                           transition={{ duration: 0.25, delay: 0.25 }}
                       >
-                          <Container style={{ position: "absolute" }}>
+                          <Container style={{ position: "relative" }}>
                               <Row className="justify-content-center ml-1 mr-1">
                                   <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px" }}>
-                                      <h2 className="text-center mb-4">Newsletter</h2>
-                                      <p className='text-center mb-4'>You will get regular updates on our invents</p>
+                                      <FaTimes onClick={handleShow} style={{ position: "absolute", top: "10px", right: "10px" }} />
+                                      <h2 className="text-center mb-2">Ticket Purchase</h2>
+                                      <p className='text-center mb-3'>Exclusive access to our events</p>
                                       <Form ref={formRef} onSubmit={handleSubmit}>
                                           <FormGroup>
                                               <Label>Email</Label>
@@ -168,7 +173,7 @@ function Event({ eve, index }) {
                                                   className='butt'
                                                   type="submit"
                                               >
-                                                  Confirm
+                                                  Purchase
                                               </button>
                                           </div>
                                       </Form>

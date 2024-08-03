@@ -414,6 +414,43 @@ export const fetchCaterings = () => (dispatch) => {
     .catch(error => dispatch(cateringsFailed(error.message)));
 }
 
+export const seatLoading = () => ({
+    type: ActionTypes.RESERVATION_LOADING
+});
+
+export const seatFailed = (errmess) => ({
+    type: ActionTypes.RESERVATION_FAILED,
+    payload: errmess
+});
+
+export const addseat = (seat) => ({
+    type: ActionTypes.ADD_RESERVATION,
+    payload: seat
+});
+
+export const fetchSeats = () => (dispatch) => {
+    
+    dispatch(seatLoading());
+
+    return fetch(baseUrl + 'reservation/resseat')
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(leaders => dispatch(addseat(leaders)))
+    .catch(error => dispatch(seatFailed(error.message)));
+}
+
 export const eventsLoading = () => ({
     type: ActionTypes.EVENTS_LOADING
 });

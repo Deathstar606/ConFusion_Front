@@ -31,7 +31,9 @@ function ReserveSuccess() {
     }, [tranId, email]); // Add dependencies
 
     return (
-        <h1>Reservation Has Been Successful</h1>
+        <div style={{backgroundColor: "rgb(255, 193, 0)"}}>
+            <h1 className='text-center p-4'>Reservation Has Been Successful</h1>
+        </div>
     );
 }
 

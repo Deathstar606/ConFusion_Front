@@ -194,3 +194,15 @@ address{
   right: 10px;
   cursor: pointer;
 } */
+
+.seat-col {
+  cursor: pointer;
+  border: 2px solid transparent; /* Default border */
+  transition: border 0.3s ease; /* Smooth transition for border change */
+  padding: 10px 10px 0px 10px; /* Top, Right, Bottom, Left */
+}
+
+.seat-col.selected {
+  border: 2px solid black;
+  padding: 10px 10px 0px 10px; /* Black border for selected seat */
+}

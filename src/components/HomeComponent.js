@@ -128,7 +128,7 @@ function Home(props) {
                             <Col md={4} className="d-flex align-items-center">
                                 <div>
                                     <div className="w-100 d-flex justify-content-center">
-                                        <motion.svg width="204" height="204" viewBox="-150 0 854 674" fill="none" ref={ref2}>
+                                        <motion.svg width="204" height="204" viewBox="-100 0 854 674" fill="none" ref={ref2}>
                                             <motion.path d="M33.7 384.288V626.928" 
                                             fill="none"
                                             stroke="black"
@@ -197,7 +197,7 @@ function Home(props) {
                             <Col md={4} className="d-flex align-items-center">
                                 <div>
                                     <div className="w-100 d-flex justify-content-center">
-                                        <motion.svg width="204" height="204" viewBox="0 0 854 674" fill="none" ref={ref2}>
+                                        <motion.svg width="204" height="204" viewBox="-100 0 854 674" fill="none" ref={ref2}>
                                             <motion.path d="M33.7 384.288V626.928" 
                                             fill="none"
                                             stroke="black"

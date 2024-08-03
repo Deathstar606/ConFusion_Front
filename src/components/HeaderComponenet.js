@@ -28,13 +28,124 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { AnimatePresence, motion } from 'framer-motion';
 import Burger from './Burger';
 
-export const Reserve = ({showMod}) => {
+export const OrderBar = ({ orders, dishes, handleOrdPage, total, removeOrder }) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const sidebarWidth = windowWidth < 640 ? '70vw' : '500px';
+
+  return (
+    <motion.div
+      onClick={handleOrdPage}
+      className='modal-back'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div
+        onClick={(e) => e.stopPropagation()} // Prevent click event propagation
+        initial={{ x: '100%' }}
+        animate={{ x: '0%' }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        style={{
+          backgroundColor: "rgb(0, 0, 0)",
+          color: "rgb(255, 193, 0)",
+          width: sidebarWidth, // Use the calculated width
+          height: '100vh', // Full height of the viewport
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', // Box shadow for some depth
+          position: 'fixed', // Fix to the right side
+          top: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <div style={{
+          flex: 1, // Allow this container to grow and take up available space
+          maxHeight: 'calc(100vh - 80px)', // Adjust max height to account for footer space
+          overflowY: orders.length > 0 ? 'auto' : 'hidden',
+          padding: '0 1rem', // Add padding for aesthetics
+        }}>
+          <ul className='p-3' style={{ padding: 0, listStyleType: 'none' }}>
+            {orders.length > 0 ? (
+              orders.map((order, index) => {
+                const matchingDish = dishes
+                  .flatMap(dish => dish.items)
+                  .find(di => di._id === order._id);
+                let price = matchingDish.price * order.quantity;
+                total = total + price;
+
+                return matchingDish ? (
+                  <>
+                    <Row key={index} style={{ marginBottom: '20px' }}>
+                      <Col md={4} className="mx-0">
+                        <CardImg src={baseUrl + matchingDish.image} alt={matchingDish.name}></CardImg>
+                      </Col>
+                      <Col md={8}>
+                        <strong>{matchingDish.name}<br /></strong>
+                        <strong>Price:</strong> {matchingDish.price} Tk<br />
+                        <strong>Quantity:</strong> {order.quantity}
+                      </Col>
+                    </Row>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                      <button className='butt' outline onClick={() => removeOrder(order._id, order.quantity)}>Remove</button>
+                    </div>
+                  </>
+                ) : null;
+              })
+            ) : (
+              <h3>Food cart is empty</h3>
+            )}
+          </ul>
+        </div>
+        <div className='p-3'/* style={{ padding: '1rem', borderTop: '1px solid rgba(255, 193, 0, 0.5)' }} */>
+          <div className='ml-3 mb-1'>Total: {total} Tk </div>
+          <Link to="/order">
+            <button onClick={handleOrdPage} className='butt ml-3'>Place Order</button>
+          </Link>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+export const Reserve = ({ showMod, resSeat }) => {
   const [email, setEmail] = useState('');
   const [people, setPeople] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [total, setTotal] = useState('');
+  const [selectedSeat, setSelectedSeat] = useState(''); // Added state for selected seat
 
   const today = new Date().toISOString().split('T')[0];
+
+  const handleSeatClick = (seatValue) => {
+    setTotal(seatValue);
+    setSelectedSeat(seatValue); // Update selected seat
+  };
+
+  const seats = resSeat.map((s) => {
+    const isSelected = s.seat_value === selectedSeat;
+    return (
+      <Col
+        md={6}
+        key={s._id}
+      >
+        <div onClick={() => handleSeatClick(s.seat_value)} className={`seat-col ${isSelected ? 'selected' : ''}`}>
+          <MediaQuery minWidth={640}>
+            <CardImg src={baseUrl + s.image} />
+          </MediaQuery>
+          <p className='text-center'>{s.name}, {s.seat_value} Tk</p>
+        </div>
+      </Col>
+    )
+  });
 
   useEffect(() => {
     const savedFormData = localStorage.getItem('formData');
@@ -45,113 +156,121 @@ export const Reserve = ({showMod}) => {
   }, []);
 
   const handleSubmitRes = async (event) => {
-      event.preventDefault();
-      try {
-        const response = await axios.post(baseUrl + 'reservation', { people: people, date: date, time: time, email: email, total: 10*people })
-        window.open(response.data.url);
-        setPeople("")
-        setTime("")
-        setDate("")
-        showMod()
+    event.preventDefault();
+    try {
+      const response = await axios.post(baseUrl + 'reservation', { people, date, time, email, total });
+      window.open(response.data.url);
+      setPeople("");
+      setTime("");
+      setDate("");
+      setTotal("");
+      setSelectedSeat(""); // Clear the selected seat after submission
+      showMod();
     } catch (error) {
-        alert("Reservation failed")
-        console.log(error.response.data);
+      alert("Reservation failed");
+      console.log(error.response.data);
     }
-    alert("Reservation confirmed")
+    alert("Reservation confirmed");
   };
 
   return (
     <motion.div 
-    className='modal-back'
-    initial={{ opacity: 0}}
-    animate={{ opacity: 1}}
-    exit={{ opacity: 0}}>
+      className='modal-back'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <motion.div 
         className='d-flex justify-content-center m-5'
-        initial={{ opacity: 0, y: -70}}
-        animate={{ opacity: 1, y: 0}}
-        exit={{ opacity: 0, y: -70}}
-        transition={{duration: .25, delay: .25}}>
-          <Container>
-            <Row className="justify-content-center ml-1 mr-1">
-              <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px", position: "relative"}}>
-                <Form onSubmit={handleSubmitRes}>
-                  <FaTimes onClick={showMod} style={{position: "absolute", top: "10px", right: "10px"}}/>
-                  <h1 className='text-center pb-4'>Reserve a Table</h1>
-                  <FormGroup>
-                    <Input
-                      style={{
+        initial={{ opacity: 0, y: -70 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -70 }}
+        transition={{ duration: .25, delay: .25 }}
+      >
+        <Container>
+          <Row className="justify-content-center ml-1 mr-1">
+            <Col md={5} className="p-4" style={{ backgroundColor: "rgb(255, 193, 0)", border: "black solid 2px", position: "relative" }}>
+              <Form onSubmit={handleSubmitRes}>
+                <FaTimes onClick={showMod} style={{ position: "absolute", top: "10px", right: "10px" }} />
+                <h1 className='text-center pb-1'>Reservation</h1>
+                <p className='text-center'>Book a booth in advance</p>
+                <FormGroup>
+                  <Input
+                    style={{
                       border: "2px solid black",
                       backgroundColor: "transparent",
                       padding: "5px",
                       width: "100%"
-                      }}
-                      className="rounded-0"  
-                      type="select" 
-                      value={people} 
-                      onChange={(e) => setPeople(e.target.value)} 
-                      required
-                    >
-                      <option value="" disabled>Select People</option>
-                      <option value="1">1 Person</option>
-                      <option value="2">2 People</option>
-                      <option value="3">3 People</option>
-                      <option value="4">4 People</option>
-                      <option value="5">5 People</option>
-                      <option value="6">6 People</option>
-                    </Input>
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      style={{
-                        border: "2px solid black",
-                        backgroundColor: "transparent"
-                      }}
-                      className="rounded-0" 
-                      type="date" 
-                      value={date} 
-                      onChange={(e) => setDate(e.target.value)} 
-                      min={today} 
-                      required 
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      style={{
-                        border: "2px solid black",
-                        backgroundColor: "transparent"
-                      }}
-                      className="rounded-0"  
-                      type="time" 
-                      value={time} 
-                      onChange={(e) => setTime(e.target.value)} 
-                      required 
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Input
-                      style={{
-                        border: "2px solid black",
-                        backgroundColor: "transparent"
-                      }}
-                      className="rounded-0"  
-                      type="email" 
-                      value={email} 
-                      placeholder="Email" 
-                      onChange={(e) => setEmail(e.target.value)} 
-                      required 
-                    />
-                  </FormGroup>
-                  <div className="home-butt d-flex justify-content-center">
-                    <button type="submit" className="butt">Find a Table</button>
-                  </div>
-                </Form>                
-              </Col>
-            </Row>
-          </Container>
+                    }}
+                    className="rounded-0"
+                    type="select"
+                    value={people}
+                    onChange={(e) => setPeople(e.target.value)}
+                    required
+                  >
+                    <option value="" disabled>Select People</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                    <option value="3">3 People</option>
+                    <option value="4">4 People</option>
+                    <option value="5">5 People</option>
+                    <option value="6">6 People</option>
+                  </Input>
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    style={{
+                      border: "2px solid black",
+                      backgroundColor: "transparent"
+                    }}
+                    className="rounded-0"
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    min={today}
+                    required
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    style={{
+                      border: "2px solid black",
+                      backgroundColor: "transparent"
+                    }}
+                    className="rounded-0"
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    required
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Input
+                    style={{
+                      border: "2px solid black",
+                      backgroundColor: "transparent"
+                    }}
+                    className="rounded-0"
+                    type="email"
+                    value={email}
+                    placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </FormGroup>
+                <Row className="mb-2">
+                  {seats}
+                </Row>
+                <div className="home-butt d-flex justify-content-center">
+                  <button type="submit" className="butt">Find a Table</button>
+                </div>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 const Example = (props) => {
@@ -277,73 +396,19 @@ const Example = (props) => {
                   </NavItem> */}
                 </MediaQuery>
                 <MediaQuery maxWidth={639}>
-                  <Burger/>
+                  <Burger resSeat={props.seats.seats}/>
                 </MediaQuery>
               </Nav>
         </Navbar>
       </div>
       <AnimatePresence mode='wait'>
         {ResMod && (
-          <Reserve showMod={handleShowRes}/>
+          <Reserve showMod={handleShowRes} resSeat={props.seats.seats}/>
         )}
       </AnimatePresence>
       <AnimatePresence mode='wait'>
         {ordPage && (
-          <motion.div
-            onClick={handleOrdPage} 
-            className='modal-back'
-            initial={{ opacity: 0}}
-            animate={{ opacity: 1}}
-            exit={{ opacity: 0}}>
-            <motion.div
-              onClick={(e) => e.stopPropagation()} // Prevent click event propagation
-              initial={{ x: '100%' }}
-              animate={{ x: '0%' }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              style={{
-                backgroundColor: "rgb(0, 0, 0)",
-                color: "rgb(255, 193, 0)",
-                width: '500px', // Adjust width as needed
-                height: '100%', // Full height of the viewport
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', // Box shadow for some depth
-                position: 'fixed', // Fix to the right side
-                top: 0,
-                right: 0
-              }}>
-              <ul className='p-3' style={{ padding: 0, listStyleType: 'none' }}>
-                {props.orders.orders.map((order, index) => {
-                  const matchingDish = props.dishes.dishes
-                    .flatMap(dish => dish.items)
-                    .find(di => di._id === order._id);
-                  let price = matchingDish.price * order.quantity
-                  total = total + price
-                  
-                  return matchingDish ? (
-                    <>
-                      <Row key={index} style={{ marginBottom: '20px' }}>
-                        <Col md={4} className="mx-0">
-                          <CardImg src={baseUrl + matchingDish.image} alt={matchingDish.name}></CardImg>
-                        </Col>
-                        <Col md={8}>
-                          <strong>{matchingDish.name}<br /></strong>
-                          <strong>Price:</strong> {matchingDish.price} Tk<br />
-                          <strong>Quantity:</strong> {order.quantity}
-                        </Col>
-                      </Row>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <button className='butt' outline onClick={() => props.removeOrder(order._id, order.quantity)}>Remove</button>
-                      </div>
-                    </>
-                  ) : <h3>Food cart is empty</h3>
-                })}
-              </ul>
-              <div className='ml-3 mb-1'>Total: {total} Tk </div>
-              <Link to="/order">
-                <button onClick={handleOrdPage} className='butt ml-3'>Place Order</button>
-              </Link>
-            </motion.div>
-          </motion.div>
+          <OrderBar orders={props.orders.orders} dishes={props.dishes.dishes} total={total} handleOrdPage={handleOrdPage} removeOrder={props.removeOrder}/>
         )}
       </AnimatePresence>
       <Swiper

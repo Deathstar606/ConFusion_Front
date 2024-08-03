@@ -12,14 +12,15 @@ import Events from './EventsComponent'
 import Gift from './GiftComponent';
 import Catering from './CateringComponent';
 import Sidebar from './TestNews';
-import Result from './PayStatus/PaySuccess';
+import PaySuccess from './PayStatus/PaySuccess';
+import PayFailure from './PayStatus/PayFailure';
 import GiftSuccess from './PayStatus/GiftSuccess';
 import ReserveSuccess from './PayStatus/ReserveSuccess';
 import TicketSuccess from './PayStatus/TicketSuccess';
 import { Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { connect } from 'react-redux';
-import { postComment, fetchDishes, fetchComments, fetchCaterings, fetchEvents, fetchGifts, fetchHeaders, fetchHome,
+import { postComment, fetchDishes, fetchComments, fetchCaterings, fetchEvents, fetchGifts, fetchHeaders, fetchHome, fetchSeats,
   fetchPromos, fetchLeaders, fetchOrders, addNewOrder, removeExistingOrder ,/* postFeedback, */ fetchSubscribers } from '../redux/ActionCreators';
 import React, { useEffect } from 'react';
 import { actions } from 'react-redux-form';
@@ -31,6 +32,7 @@ const mapStateToProps = state => {
     promotions: state.promotions,
     leaders: state.leaders,
     catering: state.catering,
+    seats:state.seats,
     headers: state.headers,
     home: state.home,
     events: state.events,
@@ -45,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOrders: () => dispatch(fetchOrders()),
   fetchGifts: () => dispatch(fetchGifts()),
   fetchCaterings: () => dispatch(fetchCaterings()),
+  fetchSeats: () => dispatch(fetchSeats()),
   fetchEvents: () => dispatch(fetchEvents()),
   fetchHeaders: () => dispatch(fetchHeaders()),
   fetchHome: () => dispatch(fetchHome()),
@@ -72,6 +75,7 @@ const Main = (props) => {
     props.fetchHome();
     props.fetchGifts();
     props.fetchCaterings();
+    props.fetchSeats();
     props.fetchEvents();
     props.fetchSubscribers();
   }, []);
@@ -106,6 +110,7 @@ const Main = (props) => {
         dishes={props.dishes}
         orders={props.orders}
         headers={props.headers}
+        seats={props.seats}
         removeOrder={props.removeExistingOrder}
       />
       <AnimatePresence mode="wait">
@@ -121,7 +126,8 @@ const Main = (props) => {
           <Route path="/catering" element={<Catering catering={props.catering}/>} />
           <Route path="/admin" element={<Sidebar subscribers={props.subscribers}/>} />
           <Route path="/menu/:dishId" element={<DishWithId {...props} />} />
-          <Route path="/paystat/:tranId" element={<Result/>} />
+          <Route path="/paystat/:tranId" element={<PaySuccess/>} />
+          <Route path="/payfail/:tranId" element={<PayFailure/>} />
           <Route path="/gift/:tranId/:value/:email" element={<GiftSuccess/>} />
           <Route path="/reserve/:tranId/:email" element={<ReserveSuccess/>} />
           <Route path="/events/:tranId/:email" element={<TicketSuccess/>} />
@@ -130,7 +136,7 @@ const Main = (props) => {
           <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </AnimatePresence>
-      <Footer />
+      <Footer orders={props.orders.orders} dishes={props.dishes.dishes} removeOrder={props.removeExistingOrder}/>
     </div>
   );
 };

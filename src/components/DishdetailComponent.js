@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaAngleLeft } from "react-icons/fa6";
 import { MdOutlineDeliveryDining } from "react-icons/md";
+import { FaTimes } from 'react-icons/fa';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseurl';
 import './DishBreadcrumb.css'; // Import your custom CSS
@@ -186,7 +187,8 @@ const CommentForm = (props) => {
                             exit={{ opacity: 0, y: -70 }}
                             transition={{ duration: 0.25, delay: 0.25 }}
                         >
-                            <form className="reservation-form" onSubmit={handleSubmit}>
+                            <form style={{position: "relative"}} className="reservation-form" onSubmit={handleSubmit}>
+                                <FaTimes onClick={handleMod} style={{ position: "absolute", top: "10px", right: "10px" }} />
                                 <h1>Leave a Comment</h1>
                                 <div className="form-group">
                                     <select value={rating} onChange={(e) => setRating(e.target.value)} required>
